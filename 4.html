@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
+  <title>Codinec — Best Web Development Company in India | PHP, Laravel, Mobile Apps</title>
+  <meta name="description" content="Codinec is a leading web development company in India specializing in PHP, Laravel, Full-Stack, Mobile Apps, Chatbots & Custom Software Solutions."/>
+  <meta name="keywords" content="Best Web Development Company in India, PHP Development, Laravel Development, Mobile App Development, Custom Software, Chatbot Development, API Integration"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    tailwind.config={theme:{extend:{colors:{'c-dark':'#060a14','c-card':'#0d1220','c-border':'rgba(255,255,255,0.06)','c-blue':'#2563EB','c-cyan':'#38BDF8'},fontFamily:{heading:['Poppins','sans-serif'],body:['Inter','sans-serif']}}}}
+  </script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#060a14;color:#94a3b8;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#060a14}
+    ::-webkit-scrollbar-thumb{background:#1e293b;border-radius:10px}
+    ::selection{background:#2563EB;color:#fff}
+
+    .glass-nav{background:rgba(6,10,20,0.5);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.03);transition:all .4s ease}
+    .glass-nav.scrolled{background:rgba(6,10,20,0.95);border-bottom-color:rgba(255,255,255,0.06);box-shadow:0 4px 30px rgba(0,0,0,0.5)}
+
+    .grad-text{background:linear-gradient(135deg,#2563EB 0%,#38BDF8 60%,#818cf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .grad-text-anim{background-size:200% auto;animation:gShift 4s ease infinite}
+    @keyframes gShift{0%,100%{background-position:0% center}50%{background-position:200% center}}
+
+    .btn-p{background:linear-gradient(135deg,#2563EB,#38BDF8);color:#fff;border:none;border-radius:50px;padding:13px 28px;font-weight:600;font-size:14px;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:7px;font-family:'Inter',sans-serif;box-shadow:0 4px 20px rgba(37,99,235,0.25);text-decoration:none;white-space:nowrap}
+    .btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,99,235,0.45)}
+    .btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#38BDF8,#2563EB);opacity:0;transition:opacity .3s}
+    .btn-p:hover::after{opacity:1}
+    .btn-p span,.btn-p svg,.btn-p i{position:relative;z-index:1}
+
+    .btn-g{border:1.5px solid rgba(255,255,255,0.08);border-radius:50px;padding:12px 26px;font-weight:600;font-size:14px;cursor:pointer;transition:all .3s ease;background:transparent;color:#94a3b8;display:inline-flex;align-items:center;gap:7px;font-family:'Inter',sans-serif;text-decoration:none;white-space:nowrap}
+    .btn-g:hover{border-color:rgba(56,189,248,0.4);color:#38BDF8;background:rgba(56,189,248,0.04);transform:translateY(-2px)}
+
+    .card{background:#0d1220;border:1px solid rgba(255,255,255,0.05);border-radius:18px;padding:28px 24px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#2563EB,#38BDF8);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+    .card:hover::before{transform:scaleX(1)}
+    .card:hover{transform:translateY(-5px);border-color:rgba(37,99,235,0.12);box-shadow:0 20px 50px rgba(0,0,0,0.3)}
+
+    .icon-b{width:48px;height:48px;min-width:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;transition:transform .3s ease}
+    .card:hover .icon-b{transform:scale(1.08)}
+
+    .nav-l{color:#475569;transition:color .3s ease;font-weight:500;font-size:14px;position:relative}
+    .nav-l::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,#2563EB,#38BDF8);border-radius:2px;transition:width .3s ease}
+    .nav-l:hover{color:#e2e8f0}
+    .nav-l:hover::after{width:100%}
+
+    .badge{display:inline-flex;align-items:center;gap:7px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.12);border-radius:50px;padding:7px 16px;font-size:12px;font-weight:600;color:#38BDF8;letter-spacing:.5px;text-transform:uppercase}
+
+    .glass-box{background:rgba(13,18,32,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.05);border-radius:18px;transition:border-color .3s ease}
+    .glass-box:hover{border-color:rgba(37,99,235,0.12)}
+
+    .form-in{width:100%;padding:13px 16px;background:#0a0f1e;border:1.5px solid rgba(255,255,255,0.06);border-radius:13px;color:#e2e8f0;font-family:'Inter',sans-serif;font-size:14px;transition:all .3s ease;outline:none;-webkit-appearance:none}
+    .form-in:focus{border-color:#2563EB;box-shadow:0 0 0 3px rgba(37,99,235,0.08)}
+    .form-in::placeholder{color:#334155}
+    select.form-in{cursor:pointer}
+
+    .mob-menu{position:fixed;top:0;right:-100%;width:min(300px,85vw);height:100vh;height:100dvh;background:rgba(6,10,20,0.98);backdrop-filter:blur(30px);z-index:200;transition:right .4s cubic-bezier(.4,0,.2,1);padding:80px 28px 28px;border-left:1px solid rgba(255,255,255,0.04)}
+    .mob-menu.open{right:0}
+    .mob-ov{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(3px);z-index:199;opacity:0;pointer-events:none;transition:opacity .4s ease}
+    .mob-ov.open{opacity:1;pointer-events:all}
+
+    .toast{position:fixed;bottom:20px;right:20px;left:20px;margin:0 auto;max-width:400px;background:rgba(13,18,32,0.95);backdrop-filter:blur(20px);border:1px solid rgba(37,99,235,0.2);color:#e2e8f0;padding:14px 20px;border-radius:14px;font-size:13px;font-weight:500;z-index:300;transform:translateY(80px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:9px;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
+    .toast.show{transform:translateY(0);opacity:1}
+
+    .glow{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+
+    #hero-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+
+    .star-c{color:#facc15}
+    .prod-3d-wrap{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
+    .prod-3d-wrap canvas{display:block;border-radius:18px}
+
+    /* RESPONSIVE FIXES */
+    @media(max-width:640px){
+      .card{padding:22px 18px;border-radius:15px}
+      .btn-p{padding:12px 22px;font-size:13px}
+      .btn-g{padding:11px 22px;font-size:13px}
+      .icon-b{width:42px;height:42px;min-width:42px;border-radius:11px}
+      h1{font-size:2rem !important;line-height:1.12 !important}
+      h2{font-size:1.65rem !important;line-height:1.2 !important}
+    }
+    @media(min-width:641px) and (max-width:1023px){
+      h1{font-size:2.75rem !important}
+      h2{font-size:2rem !important}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="glass-nav fixed top-0 left-0 w-full z-[100]" id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[68px]">
+    <a href="#home" class="flex items-center gap-2 shrink-0">
+      <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-gradient-to-br from-c-blue to-c-cyan flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <span class="font-bold text-base sm:text-lg font-heading text-white">Codi<span class="text-c-cyan">nec</span></span>
+    </a>
+    <div class="hidden lg:flex items-center gap-7">
+      <a href="#home" class="nav-l">Home</a>
+      <a href="#about" class="nav-l">About</a>
+      <a href="#services" class="nav-l">Services</a>
+      <a href="#product" class="nav-l">Product</a>
+      <a href="#portfolio" class="nav-l">Portfolio</a>
+      <a href="#blog" class="nav-l">Blog</a>
+      <a href="#contact" class="nav-l">Contact</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#contact" class="btn-p hidden sm:inline-flex"><span>Hire Us</span></a>
+      <button class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/5 transition" id="mt" aria-label="Menu"><i data-lucide="menu" class="w-5 h-5 text-slate-300"></i></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-ov" id="mov"></div>
+<div class="mob-menu" id="mm">
+  <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/5 transition" id="mc" aria-label="Close"><i data-lucide="x" class="w-5 h-5 text-slate-300"></i></button>
+  <div class="flex flex-col gap-1">
+    <a href="#home" class="text-base font-medium text-slate-400 hover:text-c-cyan transition py-3 border-b border-white/5 ml">Home</a>
+    <a href="#about" class="text-base font-medium text-slate-400 hover:text-c-cyan transition py-3 border-b border-white/5 ml">About Us</a>
+    <a href="#services" class="text-base font-medium text-slate-400 hover:text-c-cyan transition py-3 border-b border-white/5 ml">Services</a>
+    <a href="#product" class="text-base font-medium text-slate-400 hover:text-c-cyan transition py-3 border-b border-white/5 ml">Product</a>
+    <a href="#portfolio" class="text-base font-medium text-slate-400 hover:text-c-cyan transition py-3 border-b border-white/5 ml">Portfolio</a>
+    <a href="#blog" class="text-base font-medium text-slate-400 hover:text-c-cyan transition py-3 border-b border-white/5 ml">Blog</a>
+    <a href="#contact" class="text-base font-medium text-slate-400 hover:text-c-cyan transition py-3 border-b border-white/5 ml">Contact</a>
+    <div class="pt-5 mt-3">
+      <a href="#contact" class="btn-p w-full justify-center" onclick="closeMob()"><span>Hire Us</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+  <canvas id="hero-canvas"></canvas>
+  <div class="glow" style="width:400px;height:400px;background:rgba(37,99,235,0.05);top:-80px;right:0%"></div>
+  <div class="glow" style="width:300px;height:300px;background:rgba(56,189,248,0.03);bottom:15%;left:-8%"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-24 pb-16 lg:pt-0 lg:pb-0">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="text-center lg:text-left">
+        <div class="badge mb-5 ha" style="opacity:0;transform:translateY(20px)">
+          <span class="w-1.5 h-1.5 rounded-full bg-c-cyan animate-pulse"></span>
+          <span class="hidden sm:inline">Best Web Development Company in India</span>
+          <span class="sm:hidden">Best Web Dev Company</span>
+        </div>
+        <h1 class="text-[2rem] sm:text-5xl lg:text-[56px] font-extrabold leading-[1.08] tracking-tight text-white mb-5 ha" style="opacity:0;transform:translateY(20px)">
+          We Build <span class="grad-text grad-text-anim">Digital Solutions</span> That Grow Your Business
+        </h1>
+        <p class="text-base sm:text-lg text-slate-400 leading-relaxed mb-7 mx-auto lg:mx-0 max-w-lg ha" style="opacity:0;transform:translateY(20px)">
+          From custom web apps to mobile apps and AI chatbots — Codinec delivers scalable, secure, high-performance solutions.
+        </p>
+        <div class="flex flex-wrap gap-3 sm:gap-4 mb-9 justify-center lg:justify-start ha" style="opacity:0;transform:translateY(20px)">
+          <a href="#contact" class="btn-p"><span>Get Quote</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="#portfolio" class="btn-g"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Portfolio</span></a>
+        </div>
+        <div class="flex items-center justify-center lg:justify-start gap-5 sm:gap-7 ha" style="opacity:0;transform:translateY(20px)">
+          <div><div class="text-xl sm:text-2xl font-extrabold text-white font-heading cnt" data-target="150">0</div><div class="text-[11px] text-slate-500 font-medium mt-0.5">Projects</div></div>
+          <div class="w-px h-9 bg-white/8"></div>
+          <div><div class="text-xl sm:text-2xl font-extrabold text-white font-heading cnt" data-target="80">0</div><div class="text-[11px] text-slate-500 font-medium mt-0.5">Clients</div></div>
+          <div class="w-px h-9 bg-white/8"></div>
+          <div><div class="text-xl sm:text-2xl font-extrabold text-white font-heading cnt" data-target="5">0</div><div class="text-[11px] text-slate-500 font-medium mt-0.5">Years</div></div>
+        </div>
+      </div>
+      <div class="hidden lg:flex items-center justify-center" id="h3d">
+        <div class="glow" style="width:280px;height:280px;background:rgba(37,99,235,0.06);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-10 ha" style="opacity:0;transform:translateY(20px)">
+    <span class="text-[10px] text-slate-500 font-medium tracking-widest uppercase">Scroll</span>
+    <div class="w-5 h-7 rounded-full border border-white/8 flex justify-center pt-1.5">
+      <div class="w-1 h-1.5 rounded-full bg-c-cyan animate-bounce"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-16 sm:py-24 lg:py-28 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="aa" style="opacity:0;transform:translateX(-30px)">
+        <div class="relative">
+          <img src="https://picsum.photos/seed/codinec-team-india/600/460.jpg" alt="Codinec Team" class="rounded-2xl sm:rounded-3xl w-full object-cover shadow-2xl shadow-black/30" style="max-height:420px"/>
+          <div class="absolute -bottom-4 -right-2 sm:-bottom-5 sm:-right-5 glass-box rounded-2xl p-4 sm:p-5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-c-blue to-c-cyan flex items-center justify-center"><i data-lucide="trophy" class="w-5 h-5 text-white"></i></div>
+              <div><div class="text-lg sm:text-xl font-extrabold text-white font-heading">5+</div><div class="text-[11px] sm:text-xs text-slate-500">Years Excellence</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="aa" style="opacity:0;transform:translateX(30px)">
+        <div class="badge mb-4"><i data-lucide="info" class="w-3 h-3"></i>About Us</div>
+        <h2 class="text-[1.65rem] sm:text-4xl font-extrabold tracking-tight text-white mb-5 leading-tight">
+          Your Trusted Partner for <span class="grad-text">Digital Transformation</span>
+        </h2>
+        <p class="text-sm sm:text-[15px] text-slate-400 leading-relaxed mb-4">
+          Codinec is a results-driven web development company based in India, delivering enterprise-grade solutions to businesses worldwide.
+        </p>
+        <p class="text-sm sm:text-[15px] text-slate-400 leading-relaxed mb-6">
+          Our expert team specializes in PHP/Laravel, Python, mobile apps, and AI solutions. Every project is built for performance, security, and scalability.
+        </p>
+        <div class="grid grid-cols-2 gap-3 sm:gap-4 mb-7">
+          <div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-lg bg-c-blue/8 flex items-center justify-center shrink-0"><i data-lucide="check-circle" class="w-4 h-4 text-c-cyan"></i></div><span class="text-xs sm:text-sm font-semibold text-slate-200">Agile Process</span></div>
+          <div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-lg bg-c-blue/8 flex items-center justify-center shrink-0"><i data-lucide="check-circle" class="w-4 h-4 text-c-cyan"></i></div><span class="text-xs sm:text-sm font-semibold text-slate-200">24/7 Support</span></div>
+          <div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-lg bg-c-blue/8 flex items-center justify-center shrink-0"><i data-lucide="check-circle" class="w-4 h-4 text-c-cyan"></i></div><span class="text-xs sm:text-sm font-semibold text-slate-200">100% Delivery</span></div>
+          <div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-lg bg-c-blue/8 flex items-center justify-center shrink-0"><i data-lucide="check-circle" class="w-4 h-4 text-c-cyan"></i></div><span class="text-xs sm:text-sm font-semibold text-slate-200">Affordable</span></div>
+        </div>
+        <a href="#contact" class="btn-p"><span>Contact Now</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="py-16 sm:py-24 lg:py-28 relative">
+  <div class="glow" style="width:400px;height:400px;background:rgba(37,99,235,0.03);top:20%;right:-10%"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 sh" style="opacity:0;transform:translateY(25px)">
+      <div class="badge mb-4"><i data-lucide="layers" class="w-3 h-3"></i>Our Services</div>
+      <h2 class="text-[1.65rem] sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        End-to-End <span class="grad-text">Development Services</span>
+      </h2>
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed">From idea to deployment — we cover every aspect of your digital journey.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5" id="sg"></div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section id="product" class="py-16 sm:py-24 lg:py-28 relative overflow-hidden">
+  <div class="glow" style="width:500px;height:500px;background:rgba(37,99,235,0.04);top:-10%;left:50%;transform:translateX(-50%)"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 ph" style="opacity:0;transform:translateY(25px)">
+      <div class="badge mb-4"><i data-lucide="package" class="w-3 h-3"></i>Our Product</div>
+      <h2 class="text-[1.65rem] sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        Smart QR Menu — <span class="grad-text">Restaurant System</span>
+      </h2>
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed">Complete digital menu & restaurant management with QR ordering, analytics, and seamless CX.</p>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div class="prod-3d-wrap pa" style="opacity:0;transform:translateX(-30px)">
+        <div id="p3d" style="width:100%;height:300px sm:h-400px;background:#0a0f1e"></div>
+      </div>
+      <div class="space-y-4 pa" style="opacity:0;transform:translateX(30px)">
+        <div class="glass-box rounded-2xl p-4 sm:p-5 group">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="icon-b bg-c-blue/8 shrink-0 group-hover:bg-c-blue/15 transition"><i data-lucide="qr-code" class="w-5 h-5 text-c-cyan"></i></div>
+            <div><h4 class="text-white font-bold text-sm sm:text-base mb-1">QR Code Ordering</h4><p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Scan QR, browse menu, place orders instantly — no app needed.</p></div>
+          </div>
+        </div>
+        <div class="glass-box rounded-2xl p-4 sm:p-5 group">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="icon-b bg-cyan-500/8 shrink-0 group-hover:bg-cyan-500/15 transition"><i data-lucide="layout-dashboard" class="w-5 h-5 text-cyan-400"></i></div>
+            <div><h4 class="text-white font-bold text-sm sm:text-base mb-1">Admin Dashboard</h4><p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Manage orders, menu, tables, and staff from real-time dashboard.</p></div>
+          </div>
+        </div>
+        <div class="glass-box rounded-2xl p-4 sm:p-5 group">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="icon-b bg-purple-500/8 shrink-0 group-hover:bg-purple-500/15 transition"><i data-lucide="bar-chart-3" class="w-5 h-5 text-purple-400"></i></div>
+            <div><h4 class="text-white font-bold text-sm sm:text-base mb-1">Analytics & Reports</h4><p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Track revenue, popular items, peak hours with smart analytics.</p></div>
+          </div>
+        </div>
+        <div class="glass-box rounded-2xl p-4 sm:p-5 group">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="icon-b bg-green-500/8 shrink-0 group-hover:bg-green-500/15 transition"><i data-lucide="printer" class="w-5 h-5 text-green-400"></i></div>
+            <div><h4 class="text-white font-bold text-sm sm:text-base mb-1">Kitchen Display System</h4><p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Auto-sync orders to kitchen with priority management.</p></div>
+          </div>
+        </div>
+        <div class="glass-box rounded-2xl p-4 sm:p-5 group">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="icon-b bg-amber-500/8 shrink-0 group-hover:bg-amber-500/15 transition"><i data-lucide="credit-card" class="w-5 h-5 text-amber-400"></i></div>
+            <div><h4 class="text-white font-bold text-sm sm:text-base mb-1">Payment Integration</h4><p class="text-slate-400 text-xs sm:text-sm leading-relaxed">UPI, cards, wallets, cash with automatic bill generation.</p></div>
+          </div>
+        </div>
+        <a href="#contact" class="btn-p mt-2"><span>Request Demo</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="py-16 sm:py-24 lg:py-28 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 pth" style="opacity:0;transform:translateY(25px)">
+      <div class="badge mb-4"><i data-lucide="briefcase" class="w-3 h-3"></i>Portfolio</div>
+      <h2 class="text-[1.65rem] sm:text-4xl font-extrabold tracking-tight text-white mb-4">Our Recent <span class="grad-text">Projects</span></h2>
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed">Real projects. Real results.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" id="pg"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="py-16 sm:py-24 lg:py-28 relative">
+  <div class="glow" style="width:350px;height:350px;background:rgba(37,99,235,0.03);bottom:0;left:-5%"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 th" style="opacity:0;transform:translateY(25px)">
+      <div class="badge mb-4"><i data-lucide="star" class="w-3 h-3"></i>Testimonials</div>
+      <h2 class="text-[1.65rem] sm:text-4xl font-extrabold tracking-tight text-white mb-4">What Our <span class="grad-text">Clients Say</span></h2>
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed">Hear from the businesses we've helped succeed.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" id="tg"></div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" class="py-16 sm:py-24 lg:py-28 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 bh" style="opacity:0;transform:translateY(25px)">
+      <div class="badge mb-4"><i data-lucide="pen-line" class="w-3 h-3"></i>Blog</div>
+      <h2 class="text-[1.65rem] sm:text-4xl font-extrabold tracking-tight text-white mb-4">Latest <span class="grad-text">Insights</span></h2>
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed">Stay updated with latest trends in web development.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" id="bg"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-16 sm:py-24 lg:py-28 relative">
+  <div class="glow" style="width:400px;height:400px;background:rgba(37,99,235,0.03);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 ch" style="opacity:0;transform:translateY(25px)">
+      <div class="badge mb-4"><i data-lucide="mail" class="w-3 h-3"></i>Contact Us</div>
+      <h2 class="text-[1.65rem] sm:text-4xl font-extrabold tracking-tight text-white mb-4">Let's Build Something <span class="grad-text">Amazing</span></h2>
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed">Get a free consultation within 24 hours.</p>
+    </div>
+    <div class="grid lg:grid-cols-5 gap-6 lg:gap-10">
+      <div class="lg:col-span-2 space-y-4 ca" style="opacity:0;transform:translateX(-25px)">
+        <div class="glass-box rounded-2xl p-4 sm:p-5">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-c-blue/8 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-c-cyan"></i></div>
+            <div><h4 class="font-bold text-white text-sm mb-0.5">Office</h4><p class="text-xs sm:text-sm text-slate-400">India<br/>Available Worldwide</p></div>
+          </div>
+        </div>
+        <div class="glass-box rounded-2xl p-4 sm:p-5">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/8 flex items-center justify-center shrink-0"><i data-lucide="mail" class="w-4 h-4 text-cyan-400"></i></div>
+            <div><h4 class="font-bold text-white text-sm mb-0.5">Email</h4><p class="text-xs sm:text-sm text-slate-400">hello@codinec.com</p><p class="text-xs sm:text-sm text-slate-400">careers@codinec.com</p></div>
+          </div>
+        </div>
+        <div class="glass-box rounded-2xl p-4 sm:p-5">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-green-500/8 flex items-center justify-center shrink-0"><i data-lucide="phone" class="w-4 h-4 text-green-400"></i></div>
+            <div><h4 class="font-bold text-white text-sm mb-0.5">Phone / WhatsApp</h4><p class="text-xs sm:text-sm text-slate-400">+91 XXXXX XXXXX</p><p class="text-xs sm:text-sm text-slate-400">Mon–Sat, 10AM–7PM IST</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-3 ca" style="opacity:0;transform:translateX(25px)">
+        <form class="glass-box rounded-2xl sm:rounded-3xl p-5 sm:p-8" id="cf" onsubmit="handleSubmit(event)">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <div><label class="text-xs sm:text-sm font-semibold text-slate-300 mb-1.5 block">Name *</label><input type="text" class="form-in" placeholder="Your name" required/></div>
+            <div><label class="text-xs sm:text-sm font-semibold text-slate-300 mb-1.5 block">Email *</label><input type="email" class="form-in" placeholder="you@email.com" required/></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <div><label class="text-xs sm:text-sm font-semibold text-slate-300 mb-1.5 block">Phone</label><input type="tel" class="form-in" placeholder="+91 XXXXX XXXXX"/></div>
+            <div>
+              <label class="text-xs sm:text-sm font-semibold text-slate-300 mb-1.5 block">Service *</label>
+              <select class="form-in" required>
+                <option value="" disabled selected>Select service</option>
+                <option>PHP Framework Development</option>
+                <option>Full-Stack Web Development</option>
+                <option>Custom Web Application</option>
+                <option>Database Design & Optimization</option>
+                <option>Website Maintenance & Support</option>
+                <option>Custom Tools & Automation</option>
+                <option>Python Scripting & Automation</option>
+                <option>Mobile Application Development</option>
+                <option>Chatbot Development</option>
+                <option>API Development & Integration</option>
+                <option>Smart QR Menu (Product)</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3 sm:mb-4">
+            <label class="text-xs sm:text-sm font-semibold text-slate-300 mb-1.5 block">Budget Range</label>
+            <select class="form-in"><option value="" disabled selected>Select budget</option><option>Under ₹50,000</option><option>₹50,000 – ₹1,00,000</option><option>₹1,00,000 – ₹3,00,000</option><option>₹3,00,000 – ₹5,00,000</option><option>₹5,00,000+</option><option>Let's Discuss</option></select>
+          </div>
+          <div class="mb-5 sm:mb-6">
+            <label class="text-xs sm:text-sm font-semibold text-slate-300 mb-1.5 block">Project Details *</label>
+            <textarea class="form-in" rows="4" placeholder="Tell us about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn-p w-full justify-center" id="sb">
+            <span id="st" class="flex items-center gap-2">Send Message <i data-lucide="send" class="w-4 h-4"></i></span>
+            <span id="sl" class="hidden items-center gap-2"><svg class="animate-spin w-4 h-4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>Sending...</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/4 pt-12 sm:pt-16 pb-6 sm:pb-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-12">
+      <div class="col-span-2 sm:col-span-1">
+        <a href="#home" class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-c-blue to-c-cyan flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <span class="font-bold text-base font-heading text-white">Codi<span class="text-c-cyan">nec</span></span>
+        </a>
+        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed mb-4">Best Web Development Company in India. Delivering scalable digital solutions since 2019.</p>
+        <div class="flex items-center gap-2.5">
+          <a href="#" class="w-8 h-8 rounded-lg bg-white/4 flex items-center justify-center hover:bg-c-blue transition-all text-slate-500 hover:text-white"><i data-lucide="twitter" class="w-3.5 h-3.5"></i></a>
+          <a href="#" class="w-8 h-8 rounded-lg bg-white/4 flex items-center justify-center hover:bg-c-blue transition-all text-slate-500 hover:text-white"><i data-lucide="linkedin" class="w-3.5 h-3.5"></i></a>
+          <a href="#" class="w-8 h-8 rounded-lg bg-white/4 flex items-center justify-center hover:bg-c-blue transition-all text-slate-500 hover:text-white"><i data-lucide="github" class="w-3.5 h-3.5"></i></a>
+          <a href="#" class="w-8 h-8 rounded-lg bg-white/4 flex items-center justify-center hover:bg-c-blue transition-all text-slate-500 hover:text-white"><i data-lucide="instagram" class="w-3.5 h-3.5"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3 sm:mb-4 text-xs uppercase tracking-wider">Services</h4>
+        <ul class="space-y-2">
+          <li><a href="#services" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">PHP Development</a></li>
+          <li><a href="#services" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Full-Stack Dev</a></li>
+          <li><a href="#services" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Mobile Apps</a></li>
+          <li><a href="#services" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Chatbot Dev</a></li>
+          <li><a href="#services" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">API Integration</a></li>
+          <li><a href="#services" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Python Automation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3 sm:mb-4 text-xs uppercase tracking-wider">Company</h4>
+        <ul class="space-y-2">
+          <li><a href="#about" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">About Us</a></li>
+          <li><a href="#portfolio" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Portfolio</a></li>
+          <li><a href="#blog" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Blog</a></li>
+          <li><a href="#contact" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Contact</a></li>
+          <li><a href="#" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Careers</a></li>
+          <li><a href="#" class="text-xs sm:text-sm text-slate-500 hover:text-c-cyan transition">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3 sm:mb-4 text-xs uppercase tracking-wider">Newsletter</h4>
+        <p class="text-xs sm:text-sm text-slate-500 mb-3 leading-relaxed">Get tech insights weekly.</p>
+        <form onsubmit="handleNL(event)" class="flex gap-2">
+          <input type="email" class="form-in text-xs sm:text-sm flex-1 !py-2.5 sm:!py-3 !rounded-xl" placeholder="your@email.com" required/>
+          <button type="submit" class="w-10 h-10 rounded-xl bg-gradient-to-br from-c-blue to-c-cyan flex items-center justify-center text-white shrink-0 hover:shadow-lg hover:shadow-c-blue/30 transition-all"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="border-t border-white/4 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-xs text-slate-600">© 2026 Codinec. All rights reserved.</p>
+      <div class="flex items-center gap-5">
+        <a href="#" class="text-xs text-slate-600 hover:text-c-cyan transition">Privacy</a>
+        <a href="#" class="text-xs text-slate-600 hover:text-c-cyan transition">Terms</a>
+        <a href="#" class="text-xs text-slate-600 hover:text-c-cyan transition">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i data-lucide="check-circle" class="w-4 h-4 text-green-400 shrink-0"></i><span id="tmsg">Sent!</span></div>
+
+<script>
+// ===== DATA =====
+const SV=[
+  {i:'code-2',t:'PHP Framework Development',d:'Secure & scalable apps using Laravel and CodeIgniter 4.',c:'blue'},
+  {i:'globe',t:'Full-Stack Web Development',d:'Complete frontend & backend solutions with modern tech.',c:'cyan'},
+  {i:'file-code-2',t:'Custom Web Applications',d:'Tailored web apps designed for your specific business needs.',c:'purple'},
+  {i:'database',t:'Database Design & Optimization',d:'MySQL design, performance tuning & data management.',c:'emerald'},
+  {i:'wrench',t:'Website Maintenance & Support',d:'Updates, bug fixes & ongoing support for smooth running.',c:'amber'},
+  {i:'cog',t:'Custom Tools & Automation Scripts',d:'Automated scripts & tools to improve productivity.',c:'rose'},
+  {i:'terminal',t:'Python Scripting & Automation',d:'Python automation for data processing & integrations.',c:'blue'},
+  {i:'smartphone',t:'Mobile Application Development',d:'Responsive mobile apps for Android and iOS.',c:'cyan'},
+  {i:'bot',t:'Chatbot Development',d:'Smart chatbots to enhance customer interaction.',c:'purple'},
+  {i:'plug',t:'API Development & Integration',d:'Secure APIs & seamless third-party integrations.',c:'emerald'}
+];
+const CM={
+  blue:{bg:'rgba(37,99,235,0.07)',tx:'#38BDF8'},
+  cyan:{bg:'rgba(6,182,212,0.07)',tx:'#22d3ee'},
+  purple:{bg:'rgba(139,92,246,0.07)',tx:'#a78bfa'},
+  emerald:{bg:'rgba(16,185,129,0.07)',tx:'#34d399'},
+  amber:{bg:'rgba(245,158,11,0.07)',tx:'#fbbf24'},
+  rose:{bg:'rgba(244,63,94,0.07)',tx:'#fb7185'}
+};
+const PF=[
+  {t:'E-Commerce Platform',c:'Full-Stack',im:'codinec-ecom-proj',d:'Laravel + Vue.js multi-vendor marketplace.'},
+  {t:'Healthcare Dashboard',c:'Web App',im:'codinec-health-dash',d:'Patient management with analytics.'},
+  {t:'Food Delivery App',c:'Mobile App',im:'codinec-food-app',d:'Android & iOS app with live tracking.'},
+  {t:'CRM System',c:'Custom Software',im:'codinec-crm-sys',d:'Lead management & pipeline tracking.'},
+  {t:'AI Chatbot',c:'Chatbot',im:'codinec-chatbot-ai',d:'WhatsApp & website automated support.'},
+  {t:'Smart QR Menu',c:'Product',im:'codinec-qr-menu',d:'QR ordering, KDS & analytics system.'}
+];
+const TT=[
+  {n:'Rajesh Sharma',r:'CEO, FoodChain',x:'Codinec built our Smart QR Menu and increased table turnover by 40%. Brilliant team!',s:5},
+  {n:'Priya Patel',r:'Founder, HealthFirst',x:'The healthcare dashboard is exactly what we needed. Clean, fast, reliable!',s:5},
+  {n:'Amit Verma',r:'CTO, ShopEasy',x:'Laravel expertise is top-notch. Delivered our e-commerce platform on time with zero bugs.',s:5}
+];
+const BL=[
+  {t:'Why Laravel is Best for Enterprise Web Apps in 2026',c:'PHP',d:'Jan 15, 2026',im:'codinec-blog-laravel'},
+  {t:'How QR Menu Systems are Revolutionizing Restaurants',c:'Product',d:'Jan 10, 2026',im:'codinec-blog-qr'},
+  {t:'Complete Guide to Building AI Chatbots for Business',c:'AI',d:'Jan 5, 2026',im:'codinec-blog-chatbot'}
+];
+
+// ===== RENDER =====
+function rS(){
+  const g=document.getElementById('sg');
+  g.innerHTML=SV.map(s=>{const c=CM[s.c];return`<div class="card sc" style="opacity:0;transform:translateY(25px)">
+    <div class="icon-b mb-4" style="background:${c.bg}"><i data-lucide="${s.i}" style="color:${c.tx};width:22px;height:22px"></i></div>
+    <h3 class="text-[15px] sm:text-base font-bold text-white mb-2 leading-snug">${s.t}</h3>
+    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">${s.d}</p>
+    <a href="#contact" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold hover:gap-2.5 transition-all" style="color:${c.tx}">Get Quote <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+  </div>`}).join('');lucide.createIcons();
+}
+function rP(){
+  document.getElementById('pg').innerHTML=PF.map(p=>`<div class="card p-0 overflow-hidden pc" style="opacity:0;transform:translateY(25px)">
+    <div class="relative overflow-hidden" style="height:180px"><img src="https://picsum.photos/seed/${p.im}/600/400.jpg" alt="${p.t}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"/>
+    <div class="absolute top-2.5 left-2.5"><span class="text-[10px] font-bold uppercase tracking-wider bg-c-blue/90 text-white px-2.5 py-1 rounded-full">${p.c}</span></div></div>
+    <div class="p-5"><h3 class="text-sm sm:text-base font-bold text-white mb-1.5">${p.t}</h3><p class="text-slate-400 text-xs sm:text-sm leading-relaxed">${p.d}</p></div>
+  </div>`).join('');
+}
+function rT(){
+  document.getElementById('tg').innerHTML=TT.map(t=>`<div class="card tc" style="opacity:0;transform:translateY(25px)">
+    <div class="flex items-center gap-0.5 mb-3">${'<svg class="w-3.5 h-3.5 star-c" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'.repeat(t.s)}</div>
+    <p class="text-slate-300 text-sm leading-relaxed mb-5">"${t.x}"</p>
+    <div class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-c-blue to-c-cyan flex items-center justify-center text-white font-bold text-xs">${t.n.charAt(0)}</div>
+      <div><div class="text-xs sm:text-sm font-bold text-white">${t.n}</div><div class="text-[11px] text-slate-500">${t.r}</div></div>
+    </div>
+  </div>`).join('');
+}
+function rB(){
+  document.getElementById('bg').innerHTML=BL.map(b=>`<article class="card p-0 overflow-hidden bc" style="opacity:0;transform:translateY(25px)">
+    <div class="relative overflow-hidden" style="height:160px"><img src="https://picsum.photos/seed/${b.im}/600/360.jpg" alt="${b.t}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"/>
+    <div class="absolute top-2.5 left-2.5"><span class="text-[10px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md text-white px-2.5 py-1 rounded-full">${b.c}</span></div></div>
+    <div class="p-5"><div class="text-[11px] text-slate-500 mb-2">${b.d}</div><h3 class="text-sm sm:text-[15px] font-bold text-white mb-3 leading-snug">${b.t}</h3>
+    <a href="#" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-c-cyan hover:gap-2.5 transition-all">Read More <i data-lucide="arrow-right" class="w-3 h-3"></i></a></div>
+  </article>`).join('');lucide.createIcons();
+}
+rS();rP();rT();rB();
+
+// ===== THREE.JS HERO =====
+(function(){
+  const w=document.getElementById('h3d');if(!w)return;
+  const sc=new THREE.Scene(),ca=new THREE.PerspectiveCamera(60,1,.1,1e3);ca.position.z=5;
+  const re=new THREE.WebGLRenderer({alpha:!0,antialias:!0});re.setPixelRatio(Math.min(devicePixelRatio,2));
+  const sz=Math.min(480,w.offsetWidth);re.setSize(sz,sz);re.domElement.style.borderRadius='20px';w.appendChild(re.domElement);
+  const g=new THREE.Group();sc.add(g);
+  const m1=new THREE.MeshPhongMaterial({color:0x2563EB,transparent:!0,opacity:.6,wireframe:!0});
+  const m2=new THREE.MeshPhongMaterial({color:0x38BDF8,transparent:!0,opacity:.4,wireframe:!0});
+  const m3=new THREE.MeshPhongMaterial({color:0x818cf8,transparent:!0,opacity:.35,wireframe:!0});
+  const ms=new THREE.MeshPhongMaterial({color:0x2563EB,transparent:!0,opacity:.1});
+  g.add(new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),m1));
+  g.add(new THREE.Mesh(new THREE.IcosahedronGeometry(1,1),ms));
+  const t1=new THREE.Mesh(new THREE.TorusGeometry(2,.025,16,100),m2);t1.rotation.x=Math.PI/3;g.add(t1);
+  const t2=new THREE.Mesh(new THREE.TorusGeometry(2.3,.018,16,100),m3);t2.rotation.x=-Math.PI/4;t2.rotation.y=Math.PI/6;g.add(t2);
+  const cb=[];for(let i=0;i<6;i++){const s=.08+Math.random()*.1;const c=new THREE.Mesh(new THREE.BoxGeometry(s,s,s),m2);c.userData={a:(i/6)*Math.PI*2,r:2.6+Math.random()*.4,sp:.003+Math.random()*.004,y:(Math.random()-.5)*1.8};g.add(c);cb.push(c)}
+  const pg=new THREE.BufferGeometry(),pc=180,ps=new Float32Array(pc*3);for(let i=0;i<pc*3;i++)ps[i]=(Math.random()-.5)*10;pg.setAttribute('position',new THREE.BufferAttribute(ps,3));
+  sc.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0x38BDF8,size:.012,transparent:!0,opacity:.5})));
+  sc.add(new THREE.AmbientLight(0x404060,.4));
+  const pl=new THREE.PointLight(0x2563EB,2,10);pl.position.set(3,3,3);sc.add(pl);
+  const pl2=new THREE.PointLight(0x38BDF8,1.5,10);pl2.position.set(-3,-2,2);sc.add(pl2);
+  let mx=0,my=0;document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2});
+  (function an(){requestAnimationFrame(an);
+    g.children[0].rotation.x+=.003;g.children[0].rotation.y+=.005;
+    g.children[1].rotation.x-=.002;g.children[1].rotation.y-=.003;
+    t1.rotation.z+=.002;t2.rotation.z-=.0015;
+    cb.forEach(c=>{c.userData.a+=c.userData.sp;c.position.x=Math.cos(c.userData.a)*c.userData.r;c.position.z=Math.sin(c.userData.a)*c.userData.r;c.position.y=c.userData.y+Math.sin(c.userData.a*2)*.25;c.rotation.x+=.02;c.rotation.y+=.02});
+    g.rotation.y+=(mx*.3-g.rotation.y)*.02;g.rotation.x+=(-my*.2-g.rotation.x)*.02;
+    re.render(sc,ca)})();
+  addEventListener('resize',()=>{const s=Math.min(480,w.offsetWidth);re.setSize(s,s);ca.aspect=1;ca.updateProjectionMatrix()});
+})();
+
+// ===== THREE.JS PRODUCT =====
+(function(){
+  const ct=document.getElementById('p3d');if(!ct)return;
+  const w=ct.clientWidth,h=ct.clientHeight;
+  const sc=new THREE.Scene(),ca=new THREE.PerspectiveCamera(50,w/h,.1,1e3);ca.position.set(0,1.5,5);
+  const re=new THREE.WebGLRenderer({alpha:!0,antialias:!0});re.setPixelRatio(Math.min(devicePixelRatio,2));re.setSize(w,h);ct.appendChild(re.domElement);
+  const g=new THREE.Group();sc.add(g);
+  g.add(new THREE.Mesh(new THREE.BoxGeometry(2.2,.05,1.4),new THREE.MeshPhongMaterial({color:0x1e293b,transparent:!0,opacity:.9})));
+  const sm=new THREE.Mesh(new THREE.PlaneGeometry(2,.1.2),new THREE.MeshPhongMaterial({color:0x0f172a,emissive:0x0f172a}));sm.position.y=.04;sm.rotation.x=-Math.PI/2;g.add(sm);
+  const qm=new THREE.MeshPhongMaterial({color:0x2563EB,emissive:0x2563EB,emissiveIntensity:.3});
+  const wm=new THREE.MeshPhongMaterial({color:0x1e293b,emissive:0x1e293b,emissiveIntensity:.1});
+  const pat=[[1,1,1,0,1,0,1,1,1],[1,0,1,0,0,0,1,0,1],[1,1,1,0,1,0,1,1,1],[0,0,0,0,1,0,0,0,0],[1,0,1,1,0,1,1,0,1],[0,0,0,0,1,0,0,0,0],[1,1,1,0,1,0,1,1,1],[1,0,1,0,0,0,1,0,1],[1,1,1,0,1,0,1,1,1]];
+  const bs=.11,gc=9,of=(gc*bs)/2-bs/2;
+  for(let r=0;r<gc;r++)for(let c=0;c<gc;c++){const m=new THREE.Mesh(new THREE.BoxGeometry(bs*.85,.025,bs*.85),pat[r][c]?qm:wm);m.position.set(c*bs-of,.055,r*bs-of);g.add(m)}
+  const im=new THREE.MeshPhongMaterial({color:0x38BDF8,transparent:!0,opacity:.5,wireframe:!0});
+  const ic=[];for(let i=0;i<5;i++){const geo=i%2===0?new THREE.OctahedronGeometry(.12):new THREE.TetrahedronGeometry(.12);const mesh=new THREE.Mesh(geo,im);mesh.userData={a:(i/5)*Math.PI*2,r:1.8,sp:.007,yb:.4+Math.sin(i)*.25};g.add(mesh);ic.push(mesh)}
+  sc.add(new THREE.AmbientLight(0x404060,.5));
+  const pl=new THREE.PointLight(0x2563EB,2.5,10);pl.position.set(2,3,3);sc.add(pl);
+  const pl2=new THREE.PointLight(0x38BDF8,1.5,10);pl2.position.set(-2,2,2);sc.add(pl2);
+  let vis=false;
+  (function an(){requestAnimationFrame(an);if(!vis)return;
+    g.rotation.y+=.005;g.position.y=Math.sin(Date.now()*.001)*.08;
+    ic.forEach(c=>{c.userData.a+=c.userData.sp;c.position.x=Math.cos(c.userData.a)*c.userData.r;c.position.z=Math.sin(c.userData.a)*c.userData.r;c.position.y=c.userData.yb+Math.sin(c.userData.a*3)*.15;c.rotation.x+=.02;c.rotation.z+=.01});
+    re.render(sc,ca)})();
+  new IntersectionObserver(e=>{vis=e[0].isIntersecting},{threshold:.1}).observe(ct);
+  addEventListener('resize',()=>{const nw=ct.clientWidth,nh=ct.clientHeight;re.setSize(nw,nh);ca.aspect=nw/nh;ca.updateProjectionMatrix()});
+})();
+
+// ===== GSAP =====
+gsap.registerPlugin(ScrollTrigger);
+gsap.to('.ha',{opacity:1,y:0,duration:.7,stagger:.12,ease:'power3.out',delay:.3});
+ScrollTrigger.create({start:'top -60',onEnter:()=>document.getElementById('navbar').classList.add('scrolled'),onLeaveBack:()=>document.getElementById('navbar').classList.remove('scrolled')});
+gsap.to('.aa',{opacity:1,x:0,duration:.7,stagger:.2,ease:'power3.out',scrollTrigger:{trigger:'#about',start:'top 78%'}});
+gsap.to('.sh',{opacity:1,y:0,duration:.6,ease:'power3.out',scrollTrigger:{trigger:'#services',start:'top 78%'}});
+gsap.to('.sc',{opacity:1,y:0,duration:.5,stagger:.06,ease:'power3.out',scrollTrigger:{trigger:'#sg',start:'top 82%'}});
+gsap.to('.ph',{opacity:1,y:0,duration:.6,ease:'power3.out',scrollTrigger:{trigger:'#product',start:'top 78%'}});
+gsap.to('.pa',{opacity:1,x:0,duration:.7,stagger:.2,ease:'power3.out',scrollTrigger:{trigger:'#product',start:'top 68%'}});
+gsap.to('.pth',{opacity:1,y:0,duration:.6,ease:'power3.out',scrollTrigger:{trigger:'#portfolio',start:'top 78%'}});
+gsap.to('.pc',{opacity:1,y:0,duration:.5,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'#pg',start:'top 82%'}});
+gsap.to('.th',{opacity:1,y:0,duration:.6,ease:'power3.out',scrollTrigger:{trigger:'#testimonials',start:'top 78%'}});
+gsap.to('.tc',{opacity:1,y:0,duration:.5,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'#tg',start:'top 82%'}});
+gsap.to('.bh',{opacity:1,y:0,duration:.6,ease:'power3.out',scrollTrigger:{trigger:'#blog',start:'top 78%'}});
+gsap.to('.bc',{opacity:1,y:0,duration:.5,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'#bg',start:'top 82%'}});
+gsap.to('.ch',{opacity:1,y:0,duration:.6,ease:'power3.out',scrollTrigger:{trigger:'#contact',start:'top 78%'}});
+gsap.to('.ca',{opacity:1,x:0,duration:.7,stagger:.2,ease:'power3.out',scrollTrigger:{trigger:'#contact',start:'top 68%'}});
+
+// Counter
+document.querySelectorAll('.cnt').forEach(el=>{
+  const t=+el.dataset.target;
+  ScrollTrigger.create({trigger:el,start:'top 85%',once:true,onEnter:()=>{let c=0;const s=Math.max(1,Math.floor(t/45));const iv=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(iv)}el.textContent=c+'+'},30)}});
+});
+
+// ===== MOBILE MENU =====
+const mt=document.getElementById('mt'),mc=document.getElementById('mc'),mm=document.getElementById('mm'),mo=document.getElementById('mov');
+function oM(){mm.classList.add('open');mo.classList.add('open');document.body.style.overflow='hidden'}
+function cM(){mm.classList.remove('open');mo.classList.remove('open');document.body.style.overflow=''}
+mt.addEventListener('click',oM);mc.addEventListener('click',cM);mo.addEventListener('click',cM);
+document.querySelectorAll('.ml').forEach(l=>l.addEventListener('click',cM));
+
+// ===== TOAST =====
+function showToast(m){const t=document.getElementById('toast');document.getElementById('tmsg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500)}
+
+// ===== FORMS =====
+function handleSubmit(e){e.preventDefault();const st=document.getElementById('st'),sl=document.getElementById('sl');st.classList.add('hidden');sl.classList.remove('hidden');sl.classList.add('flex');setTimeout(()=>{st.classList.remove('hidden');sl.classList.add('hidden');sl.classList.remove('flex');e.target.reset();showToast("Message sent! We'll contact you within 24 hours.")},1800)}
+function handleNL(e){e.preventDefault();e.target.reset();showToast('Subscribed! Check your inbox.')}
+</script>
+</body>
+</html>

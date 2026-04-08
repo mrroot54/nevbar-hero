@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Codinec — Best Web Development Company in India | PHP, Laravel, Mobile Apps</title>
+  <meta name="description" content="Codinec is a leading web development company in India specializing in PHP, Laravel, Full-Stack, Mobile Apps, Chatbots & Custom Software Solutions."/>
+  <meta name="keywords" content="Best Web Development Company in India, PHP Development, Laravel Development, Mobile App Development, Custom Software, Chatbot Development, API Integration"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    tailwind.config={theme:{extend:{colors:{dark:{900:'#060a14',800:'#0a0e1a',700:'#0f1629',600:'#151d35',500:'#1a2540'},blue:{primary:'#2563EB',light:'#38BDF8',glow:'rgba(37,99,235,0.15)'}},fontFamily:{heading:['Poppins','sans-serif'],body:['Inter','sans-serif']}}}}
+  </script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#060a14;color:#cbd5e1;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#060a14}
+    ::-webkit-scrollbar-thumb{background:#1e293b;border-radius:10px}
+    ::-webkit-scrollbar-thumb:hover{background:#334155}
+    ::selection{background:#2563EB;color:#fff}
+
+    .glass{background:rgba(10,14,26,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.04)}
+    .glass.scrolled{background:rgba(6,10,20,0.95);border-color:rgba(255,255,255,0.06);box-shadow:0 4px 30px rgba(0,0,0,0.4)}
+
+    .gradient-text{background:linear-gradient(135deg,#2563EB,#38BDF8,#818cf8);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .gradient-text-animate{animation:gradShift 4s ease infinite}
+    @keyframes gradShift{0%,100%{background-position:0% center}50%{background-position:200% center}}
+
+    .btn-primary{background:linear-gradient(135deg,#2563EB,#38BDF8);color:#fff;border:none;border-radius:50px;padding:14px 32px;font-weight:600;font-size:15px;cursor:pointer;transition:all .35s ease;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;box-shadow:0 4px 25px rgba(37,99,235,0.3);text-decoration:none}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 35px rgba(37,99,235,0.5)}
+    .btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#38BDF8,#2563EB);opacity:0;transition:opacity .35s ease}
+    .btn-primary:hover::after{opacity:1}
+    .btn-primary span,.btn-primary svg,.btn-primary i{position:relative;z-index:1}
+
+    .btn-ghost{border:1.5px solid rgba(255,255,255,0.1);border-radius:50px;padding:13px 30px;font-weight:600;font-size:15px;cursor:pointer;transition:all .35s ease;background:transparent;color:#cbd5e1;display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;text-decoration:none}
+    .btn-ghost:hover{border-color:#38BDF8;color:#38BDF8;background:rgba(56,189,248,0.05);transform:translateY(-2px)}
+
+    .card{background:rgba(15,22,41,0.6);border:1px solid rgba(255,255,255,0.04);border-radius:20px;padding:32px 28px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#2563EB,#38BDF8);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+    .card:hover::before{transform:scaleX(1)}
+    .card:hover{transform:translateY(-8px);border-color:rgba(37,99,235,0.15);box-shadow:0 25px 60px rgba(0,0,0,0.3)}
+
+    .icon-box{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;transition:all .3s ease}
+    .card:hover .icon-box{transform:scale(1.1)}
+
+    .nav-link{color:#64748b;transition:color .3s ease;font-weight:500;font-size:15px;position:relative}
+    .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,#2563EB,#38BDF8);border-radius:2px;transition:width .3s ease}
+    .nav-link:hover{color:#e2e8f0}
+    .nav-link:hover::after{width:100%}
+
+    .section-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.15);border-radius:50px;padding:8px 18px;font-size:13px;font-weight:600;color:#38BDF8;letter-spacing:0.5px;text-transform:uppercase}
+
+    .testimonial-card{background:rgba(15,22,41,0.5);border:1px solid rgba(255,255,255,0.04);border-radius:20px;padding:32px;transition:all .4s ease}
+    .testimonial-card:hover{border-color:rgba(37,99,235,0.15);transform:translateY(-4px)}
+
+    .form-input{width:100%;padding:14px 18px;background:rgba(15,22,41,0.8);border:1.5px solid rgba(255,255,255,0.06);border-radius:14px;color:#e2e8f0;font-family:'Inter',sans-serif;font-size:15px;transition:all .3s ease;outline:none}
+    .form-input:focus{border-color:#2563EB;box-shadow:0 0 0 4px rgba(37,99,235,0.1)}
+    .form-input::placeholder{color:#475569}
+
+    .mobile-menu{position:fixed;top:0;right:-100%;width:300px;height:100vh;background:rgba(6,10,20,0.98);backdrop-filter:blur(30px);z-index:200;transition:right .4s cubic-bezier(.4,0,.2,1);padding:80px 32px 32px;border-left:1px solid rgba(255,255,255,0.04)}
+    .mobile-menu.open{right:0}
+    .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:199;opacity:0;pointer-events:none;transition:opacity .4s ease}
+    .mobile-overlay.open{opacity:1;pointer-events:all}
+
+    .toast{position:fixed;bottom:30px;right:30px;background:rgba(15,22,41,0.95);backdrop-filter:blur(20px);border:1px solid rgba(37,99,235,0.2);color:#e2e8f0;padding:16px 24px;border-radius:14px;font-size:14px;font-weight:500;z-index:300;transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:10px;box-shadow:0 10px 40px rgba(0,0,0,0.4)}
+    .toast.show{transform:translateY(0);opacity:1}
+
+    .product-3d-container{border-radius:24px;overflow:hidden;position:relative}
+    .product-3d-container canvas{display:block;border-radius:24px}
+
+    .glow-dot{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+
+    #hero-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+
+    .star{color:#facc15}
+
+    @media(max-width:768px){
+      .btn-primary,.btn-ghost{padding:12px 24px;font-size:14px}
+      .card{padding:24px 20px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="glass fixed top-0 left-0 w-full z-[100]" id="navbar">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between h-[72px]">
+    <a href="#home" class="flex items-center gap-2.5 group">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-primary to-blue-light flex items-center justify-center shadow-lg shadow-blue-primary/20 group-hover:shadow-blue-primary/40 transition-shadow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <span class="font-bold text-lg tracking-tight font-heading text-white">Codi<span class="text-blue-light">nec</span></span>
+    </a>
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#product" class="nav-link">Product</a>
+      <a href="#portfolio" class="nav-link">Portfolio</a>
+      <a href="#blog" class="nav-link">Blog</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#contact" class="btn-primary hidden sm:inline-flex"><span>Hire Us</span></a>
+      <button class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/5 transition" id="menu-toggle" aria-label="Menu">
+        <i data-lucide="menu" class="w-5 h-5 text-slate-300"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<div class="mobile-menu" id="mobile-menu">
+  <button class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/5 transition" id="menu-close" aria-label="Close">
+    <i data-lucide="x" class="w-5 h-5 text-slate-300"></i>
+  </button>
+  <div class="flex flex-col gap-4">
+    <a href="#home" class="text-lg font-medium text-slate-400 hover:text-blue-light transition py-2 mob-link">Home</a>
+    <a href="#about" class="text-lg font-medium text-slate-400 hover:text-blue-light transition py-2 mob-link">About</a>
+    <a href="#services" class="text-lg font-medium text-slate-400 hover:text-blue-light transition py-2 mob-link">Services</a>
+    <a href="#product" class="text-lg font-medium text-slate-400 hover:text-blue-light transition py-2 mob-link">Product</a>
+    <a href="#portfolio" class="text-lg font-medium text-slate-400 hover:text-blue-light transition py-2 mob-link">Portfolio</a>
+    <a href="#blog" class="text-lg font-medium text-slate-400 hover:text-blue-light transition py-2 mob-link">Blog</a>
+    <a href="#contact" class="text-lg font-medium text-slate-400 hover:text-blue-light transition py-2 mob-link">Contact</a>
+    <div class="pt-4 mt-2 border-t border-white/5">
+      <a href="#contact" class="btn-primary w-full justify-center" onclick="closeMobile()"><span>Hire Us</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== HERO SECTION ========== -->
+<section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+  <canvas id="hero-canvas"></canvas>
+  <div class="glow-dot" style="width:500px;height:500px;background:rgba(37,99,235,0.06);top:-100px;right:5%"></div>
+  <div class="glow-dot" style="width:350px;height:350px;background:rgba(56,189,248,0.04);bottom:10%;left:-5%"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-5 lg:px-8 w-full pt-28 pb-20 lg:pt-0 lg:pb-0">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Left -->
+      <div>
+        <div class="section-badge mb-6 hero-anim" style="opacity:0;transform:translateY(20px)">
+          <span class="w-2 h-2 rounded-full bg-blue-light animate-pulse"></span>
+          Best Web Development Company in India
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-[58px] font-extrabold leading-[1.06] tracking-tight text-white mb-6 hero-anim" style="opacity:0;transform:translateY(20px)">
+          We Build <span class="gradient-text gradient-text-animate">Digital Solutions</span> That Grow Your Business
+        </h1>
+        <p class="text-lg text-slate-400 leading-relaxed mb-8 max-w-lg hero-anim" style="opacity:0;transform:translateY(20px)">
+          From custom web applications to mobile apps and AI chatbots — Codinec delivers scalable, secure, and high-performance solutions for startups and enterprises.
+        </p>
+        <div class="flex flex-wrap gap-4 mb-10 hero-anim" style="opacity:0;transform:translateY(20px)">
+          <a href="#contact" class="btn-primary"><span>Get Quote</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="#portfolio" class="btn-ghost"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>View Portfolio</span></a>
+        </div>
+        <div class="flex items-center gap-6 sm:gap-8 hero-anim" style="opacity:0;transform:translateY(20px)">
+          <div><div class="text-2xl font-extrabold text-white font-heading counter" data-target="150">0</div><div class="text-xs text-slate-500 font-medium mt-0.5">Projects Delivered</div></div>
+          <div class="w-px h-10 bg-white/10"></div>
+          <div><div class="text-2xl font-extrabold text-white font-heading counter" data-target="80">0</div><div class="text-xs text-slate-500 font-medium mt-0.5">Happy Clients</div></div>
+          <div class="w-px h-10 bg-white/10"></div>
+          <div><div class="text-2xl font-extrabold text-white font-heading counter" data-target="5">0</div><div class="text-xs text-slate-500 font-medium mt-0.5">Years Experience</div></div>
+        </div>
+      </div>
+      <!-- Right: 3D will render here -->
+      <div class="hidden lg:flex items-center justify-center" id="hero-3d-wrapper">
+        <div class="glow-dot" style="width:300px;height:300px;background:rgba(37,99,235,0.08);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 hero-anim" style="opacity:0;transform:translateY(20px)">
+    <span class="text-[11px] text-slate-500 font-medium tracking-widest uppercase">Scroll</span>
+    <div class="w-5 h-8 rounded-full border border-white/10 flex justify-center pt-1.5">
+      <div class="w-1 h-2 rounded-full bg-blue-light animate-bounce"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT SECTION ========== -->
+<section id="about" class="py-24 lg:py-32 relative">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="about-anim" style="opacity:0;transform:translateX(-40px)">
+        <div class="relative">
+          <img src="https://picsum.photos/seed/codinec-team-dev/600/480.jpg" alt="Codinec Team" class="rounded-3xl w-full object-cover shadow-2xl shadow-black/30"/>
+          <div class="absolute -bottom-5 -right-5 glass rounded-2xl p-5 hidden sm:block">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-primary to-blue-light flex items-center justify-center"><i data-lucide="trophy" class="w-6 h-6 text-white"></i></div>
+              <div><div class="text-xl font-extrabold text-white font-heading">5+</div><div class="text-xs text-slate-400">Years Excellence</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-anim" style="opacity:0;transform:translateX(40px)">
+        <div class="section-badge mb-5"><i data-lucide="info" class="w-3.5 h-3.5"></i>About Us</div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+          Your Trusted Partner for <span class="gradient-text">Digital Transformation</span>
+        </h2>
+        <p class="text-slate-400 text-[16px] leading-relaxed mb-5">
+          Codinec is a results-driven web development company based in India, delivering enterprise-grade solutions to businesses worldwide. We combine technical excellence with creative thinking.
+        </p>
+        <p class="text-slate-400 text-[16px] leading-relaxed mb-8">
+          Our expert team specializes in PHP/Laravel, Python, mobile apps, and cutting-edge AI solutions. Every project we deliver is built for performance, security, and scalability.
+        </p>
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-blue-primary/10 flex items-center justify-center"><i data-lucide="check-circle" class="w-5 h-5 text-blue-light"></i></div><span class="text-sm font-semibold text-slate-200">Agile Process</span></div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-blue-primary/10 flex items-center justify-center"><i data-lucide="check-circle" class="w-5 h-5 text-blue-light"></i></div><span class="text-sm font-semibold text-slate-200">24/7 Support</span></div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-blue-primary/10 flex items-center justify-center"><i data-lucide="check-circle" class="w-5 h-5 text-blue-light"></i></div><span class="text-sm font-semibold text-slate-200">100% Delivery</span></div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-blue-primary/10 flex items-center justify-center"><i data-lucide="check-circle" class="w-5 h-5 text-blue-light"></i></div><span class="text-sm font-semibold text-slate-200">Affordable Pricing</span></div>
+        </div>
+        <a href="#contact" class="btn-primary"><span>Contact Now</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SERVICES SECTION ========== -->
+<section id="services" class="py-24 lg:py-32 relative">
+  <div class="glow-dot" style="width:500px;height:500px;background:rgba(37,99,235,0.04);top:20%;right:-10%"></div>
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-16 svc-head" style="opacity:0;transform:translateY(30px)">
+      <div class="section-badge mb-5"><i data-lucide="layers" class="w-3.5 h-3.5"></i>Our Services</div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        End-to-End <span class="gradient-text">Development Services</span>
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">From idea to deployment — we cover every aspect of your digital journey with precision and expertise.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="services-grid">
+      <!-- Service Cards will be generated by JS for cleaner code -->
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRODUCT SECTION ========== -->
+<section id="product" class="py-24 lg:py-32 relative overflow-hidden">
+  <div class="glow-dot" style="width:600px;height:600px;background:rgba(37,99,235,0.05);top:-10%;left:50%;transform:translateX(-50%)"></div>
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-16 prod-head" style="opacity:0;transform:translateY(30px)">
+      <div class="section-badge mb-5"><i data-lucide="package" class="w-3.5 h-3.5"></i>Our Product</div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        Smart QR Menu — <span class="gradient-text">Restaurant Management System</span>
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">A complete digital menu and restaurant management solution with QR code ordering, analytics, and seamless customer experience.</p>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div class="product-3d-container prod-anim" style="opacity:0;transform:translateX(-40px)">
+        <div id="product-3d" style="width:100%;height:400px;background:#0a0e1a;border-radius:24px;border:1px solid rgba(255,255,255,0.04)"></div>
+      </div>
+      <div class="space-y-5 prod-anim" style="opacity:0;transform:translateX(40px)">
+        <div class="glass rounded-2xl p-5 hover:border-blue-primary/20 transition-all group">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-blue-primary/10 flex items-center justify-center shrink-0 group-hover:bg-blue-primary/20 transition"><i data-lucide="qr-code" class="w-5 h-5 text-blue-light"></i></div>
+            <div><h4 class="text-white font-bold mb-1">QR Code Ordering</h4><p class="text-slate-400 text-sm leading-relaxed">Customers scan QR code, browse menu, and place orders instantly — no app download needed.</p></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-5 hover:border-blue-primary/20 transition-all group">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:bg-cyan-500/20 transition"><i data-lucide="layout-dashboard" class="w-5 h-5 text-cyan-400"></i></div>
+            <div><h4 class="text-white font-bold mb-1">Admin Dashboard</h4><p class="text-slate-400 text-sm leading-relaxed">Manage orders, menu items, tables, and staff from a powerful real-time dashboard.</p></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-5 hover:border-blue-primary/20 transition-all group">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:bg-purple-500/20 transition"><i data-lucide="bar-chart-3" class="w-5 h-5 text-purple-400"></i></div>
+            <div><h4 class="text-white font-bold mb-1">Analytics & Reports</h4><p class="text-slate-400 text-sm leading-relaxed">Track revenue, popular items, peak hours, and customer behavior with smart analytics.</p></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-5 hover:border-blue-primary/20 transition-all group">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0 group-hover:bg-green-500/20 transition"><i data-lucide="printer" class="w-5 h-5 text-green-400"></i></div>
+            <div><h4 class="text-white font-bold mb-1">Kitchen Display System</h4><p class="text-slate-400 text-sm leading-relaxed">Auto-sync orders to kitchen screens with priority management and preparation timers.</p></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-5 hover:border-blue-primary/20 transition-all group">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0 group-hover:bg-amber-500/20 transition"><i data-lucide="credit-card" class="w-5 h-5 text-amber-400"></i></div>
+            <div><h4 class="text-white font-bold mb-1">Payment Integration</h4><p class="text-slate-400 text-sm leading-relaxed">Multiple payment options — UPI, cards, wallets, and cash with automatic bill generation.</p></div>
+          </div>
+        </div>
+        <a href="#contact" class="btn-primary mt-2"><span>Request Demo</span><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PORTFOLIO SECTION ========== -->
+<section id="portfolio" class="py-24 lg:py-32 relative">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16 port-head" style="opacity:0;transform:translateY(30px)">
+      <div class="section-badge mb-5"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i>Portfolio</div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        Our Recent <span class="gradient-text">Projects</span>
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">Real projects. Real results. See how we've helped businesses transform digitally.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid"></div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS SECTION ========== -->
+<section id="testimonials" class="py-24 lg:py-32 relative">
+  <div class="glow-dot" style="width:400px;height:400px;background:rgba(37,99,235,0.04);bottom:0;left:-5%"></div>
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-16 test-head" style="opacity:0;transform:translateY(30px)">
+      <div class="section-badge mb-5"><i data-lucide="star" class="w-3.5 h-3.5"></i>Testimonials</div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        What Our <span class="gradient-text">Clients Say</span>
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">Don't just take our word for it — hear from the businesses we've helped succeed.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="testimonial-grid"></div>
+  </div>
+</section>
+
+<!-- ========== BLOG SECTION (SEO) ========== -->
+<section id="blog" class="py-24 lg:py-32 relative">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16 blog-head" style="opacity:0;transform:translateY(30px)">
+      <div class="section-badge mb-5"><i data-lucide="pen-line" class="w-3.5 h-3.5"></i>Blog</div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        Latest <span class="gradient-text">Insights</span>
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">Stay updated with the latest trends in web development, technology, and business growth.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-grid"></div>
+  </div>
+</section>
+
+<!-- ========== CONTACT SECTION ========== -->
+<section id="contact" class="py-24 lg:py-32 relative">
+  <div class="glow-dot" style="width:500px;height:500px;background:rgba(37,99,235,0.04);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+    <div class="text-center max-w-2xl mx-auto mb-16 cont-head" style="opacity:0;transform:translateY(30px)">
+      <div class="section-badge mb-5"><i data-lucide="mail" class="w-3.5 h-3.5"></i>Contact Us</div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+        Let's Build Something <span class="gradient-text">Amazing Together</span>
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">Tell us about your project and get a free consultation within 24 hours.</p>
+    </div>
+    <div class="grid lg:grid-cols-5 gap-10 lg:gap-12">
+      <div class="lg:col-span-2 space-y-5 cont-anim" style="opacity:0;transform:translateX(-30px)">
+        <div class="glass rounded-2xl p-6 hover:border-blue-primary/15 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-blue-primary/10 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-5 h-5 text-blue-light"></i></div>
+            <div><h4 class="font-bold text-white mb-1">Office</h4><p class="text-sm text-slate-400 leading-relaxed">India<br/>Available Worldwide (Remote)</p></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 hover:border-blue-primary/15 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0"><i data-lucide="mail" class="w-5 h-5 text-cyan-400"></i></div>
+            <div><h4 class="font-bold text-white mb-1">Email</h4><p class="text-sm text-slate-400">hello@codinec.com</p><p class="text-sm text-slate-400">careers@codinec.com</p></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 hover:border-blue-primary/15 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0"><i data-lucide="phone" class="w-5 h-5 text-green-400"></i></div>
+            <div><h4 class="font-bold text-white mb-1">Phone / WhatsApp</h4><p class="text-sm text-slate-400">+91 XXXXX XXXXX</p><p class="text-sm text-slate-400">Mon – Sat, 10AM – 7PM IST</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-3 cont-anim" style="opacity:0;transform:translateX(30px)">
+        <form class="glass rounded-3xl p-7 lg:p-9" id="contact-form" onsubmit="handleSubmit(event)">
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div><label class="text-sm font-semibold text-slate-300 mb-2 block">Name *</label><input type="text" class="form-input" placeholder="Your name" required/></div>
+            <div><label class="text-sm font-semibold text-slate-300 mb-2 block">Email *</label><input type="email" class="form-input" placeholder="you@email.com" required/></div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div><label class="text-sm font-semibold text-slate-300 mb-2 block">Phone</label><input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX"/></div>
+            <div>
+              <label class="text-sm font-semibold text-slate-300 mb-2 block">Service *</label>
+              <select class="form-input cursor-pointer" required>
+                <option value="" disabled selected>Select service</option>
+                <option>PHP Framework Development</option>
+                <option>Full-Stack Web Development</option>
+                <option>Custom Web Application</option>
+                <option>Database Design & Optimization</option>
+                <option>Website Maintenance & Support</option>
+                <option>Custom Tools & Automation</option>
+                <option>Python Scripting & Automation</option>
+                <option>Mobile Application Development</option>
+                <option>Chatbot Development</option>
+                <option>API Development & Integration</option>
+                <option>Smart QR Menu (Product)</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-4"><label class="text-sm font-semibold text-slate-300 mb-2 block">Budget Range</label>
+            <select class="form-input cursor-pointer"><option value="" disabled selected>Select budget</option><option>Under ₹50,000</option><option>₹50,000 – ₹1,00,000</option><option>₹1,00,000 – ₹3,00,000</option><option>₹3,00,000 – ₹5,00,000</option><option>₹5,00,000+</option><option>Let's Discuss</option></select>
+          </div>
+          <div class="mb-6"><label class="text-sm font-semibold text-slate-300 mb-2 block">Project Details *</label><textarea class="form-input" rows="4" placeholder="Tell us about your project requirements..." required></textarea></div>
+          <button type="submit" class="btn-primary w-full justify-center" id="submit-btn"><span id="submit-text" class="flex items-center gap-2">Send Message <i data-lucide="send" class="w-4 h-4"></i></span><span id="submit-loading" class="hidden items-center gap-2"><svg class="animate-spin w-5 h-5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg> Sending...</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="border-t border-white/5 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+      <div>
+        <a href="#home" class="flex items-center gap-2.5 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-primary to-blue-light flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <span class="font-bold text-lg font-heading text-white">Codi<span class="text-blue-light">nec</span></span>
+        </a>
+        <p class="text-sm text-slate-500 leading-relaxed mb-5">Best Web Development Company in India. Delivering scalable digital solutions since 2019.</p>
+        <div class="flex items-center gap-3">
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-primary transition-all text-slate-400 hover:text-white"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-primary transition-all text-slate-400 hover:text-white"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-primary transition-all text-slate-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-primary transition-all text-slate-400 hover:text-white"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Services</h4>
+        <ul class="space-y-2.5">
+          <li><a href="#services" class="text-sm text-slate-500 hover:text-blue-light transition">PHP Development</a></li>
+          <li><a href="#services" class="text-sm text-slate-500 hover:text-blue-light transition">Full-Stack Development</a></li>
+          <li><a href="#services" class="text-sm text-slate-500 hover:text-blue-light transition">Mobile Apps</a></li>
+          <li><a href="#services" class="text-sm text-slate-500 hover:text-blue-light transition">Chatbot Development</a></li>
+          <li><a href="#services" class="text-sm text-slate-500 hover:text-blue-light transition">API Integration</a></li>
+          <li><a href="#services" class="text-sm text-slate-500 hover:text-blue-light transition">Python Automation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Company</h4>
+        <ul class="space-y-2.5">
+          <li><a href="#about" class="text-sm text-slate-500 hover:text-blue-light transition">About Us</a></li>
+          <li><a href="#portfolio" class="text-sm text-slate-500 hover:text-blue-light transition">Portfolio</a></li>
+          <li><a href="#blog" class="text-sm text-slate-500 hover:text-blue-light transition">Blog</a></li>
+          <li><a href="#contact" class="text-sm text-slate-500 hover:text-blue-light transition">Contact</a></li>
+          <li><a href="#" class="text-sm text-slate-500 hover:text-blue-light transition">Careers</a></li>
+          <li><a href="#" class="text-sm text-slate-500 hover:text-blue-light transition">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Newsletter</h4>
+        <p class="text-sm text-slate-500 mb-4 leading-relaxed">Get tech insights & updates weekly.</p>
+        <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+          <input type="email" class="form-input text-sm flex-1 !py-3 !rounded-xl" placeholder="your@email.com" required/>
+          <button type="submit" class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-primary to-blue-light flex items-center justify-center text-white shrink-0 hover:shadow-lg hover:shadow-blue-primary/30 transition-all"><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-slate-600">© 2026 Codinec. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-sm text-slate-600 hover:text-blue-light transition">Privacy</a>
+        <a href="#" class="text-sm text-slate-600 hover:text-blue-light transition">Terms</a>
+        <a href="#" class="text-sm text-slate-600 hover:text-blue-light transition">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i><span id="toast-msg">Message sent!</span></div>
+
+<script>
+// ============ DATA ============
+const services = [
+  { icon: 'code-2', title: 'PHP Framework Development', desc: 'We build secure and scalable applications using modern PHP frameworks like Laravel and CodeIgniter 4.', color: 'blue' },
+  { icon: 'globe', title: 'Full-Stack Web Development', desc: 'Complete web solutions including frontend and backend development with modern technologies.', color: 'cyan' },
+  { icon: 'file-code-2', title: 'Custom Web Applications', desc: 'We develop tailored web applications designed to meet your specific business needs.', color: 'purple' },
+  { icon: 'database', title: 'Database Design & Optimization', desc: 'Efficient MySQL database design, performance tuning, and data management solutions.', color: 'emerald' },
+  { icon: 'wrench', title: 'Website Maintenance & Support', desc: 'Regular updates, bug fixes, and ongoing support to keep your website running smoothly.', color: 'amber' },
+  { icon: 'cog', title: 'Custom Tools & Automation Scripts', desc: 'Development of automated scripts and custom tools to improve workflow and productivity.', color: 'rose' },
+  { icon: 'terminal', title: 'Python Scripting & Automation', desc: 'Automation solutions using Python for data processing, task automation, and integrations.', color: 'blue' },
+  { icon: 'smartphone', title: 'Mobile Application Development', desc: 'Building responsive and user-friendly mobile applications for Android and iOS.', color: 'cyan' },
+  { icon: 'bot', title: 'Chatbot Development', desc: 'Smart chatbot solutions to enhance customer interaction and support.', color: 'purple' },
+  { icon: 'plug', title: 'API Development & Integration', desc: 'Secure API creation and seamless integration with third-party services.', color: 'emerald' }
+];
+
+const colorMap = {
+  blue: { bg: 'rgba(37,99,235,0.08)', border: 'rgba(37,99,235,0.15)', text: '#38BDF8' },
+  cyan: { bg: 'rgba(6,182,212,0.08)', border: 'rgba(6,182,212,0.15)', text: '#22d3ee' },
+  purple: { bg: 'rgba(139,92,246,0.08)', border: 'rgba(139,92,246,0.15)', text: '#a78bfa' },
+  emerald: { bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.15)', text: '#34d399' },
+  amber: { bg: 'rgba(245,158,11,0.08)', border: 'rgba(245,158,11,0.15)', text: '#fbbf24' },
+  rose: { bg: 'rgba(244,63,94,0.08)', border: 'rgba(244,63,94,0.15)', text: '#fb7185' }
+};
+
+const portfolioData = [
+  { title: 'E-Commerce Platform', cat: 'Full-Stack', img: 'codinec-ecom-proj', desc: 'Laravel + Vue.js based multi-vendor marketplace with payment integration.' },
+  { title: 'Healthcare Dashboard', cat: 'Web App', img: 'codinec-health-dash', desc: 'Real-time patient management system with analytics and appointment scheduling.' },
+  { title: 'Food Delivery App', cat: 'Mobile App', img: 'codinec-food-app', desc: 'Android & iOS food delivery application with real-time tracking.' },
+  { title: 'CRM System', cat: 'Custom Software', img: 'codinec-crm-sys', desc: 'Custom CRM with lead management, pipeline tracking, and reporting.' },
+  { title: 'AI Chatbot', cat: 'Chatbot', img: 'codinec-chatbot-ai', desc: 'WhatsApp & website chatbot for automated customer support.' },
+  { title: 'Smart QR Menu', cat: 'Product', img: 'codinec-qr-menu', desc: 'Restaurant QR menu system with ordering, KDS, and analytics.' }
+];
+
+const testimonialData = [
+  { name: 'Rajesh Sharma', role: 'CEO, FoodChain', text: 'Codinec built our Smart QR Menu system and it increased our table turnover by 40%. Absolutely brilliant team!', stars: 5 },
+  { name: 'Priya Patel', role: 'Founder, HealthFirst', text: 'The healthcare dashboard they built is exactly what we needed. Clean, fast, and reliable. Highly recommend!', stars: 5 },
+  { name: 'Amit Verma', role: 'CTO, ShopEasy', text: 'Their Laravel expertise is top-notch. Delivered our e-commerce platform on time with zero bugs.', stars: 5 }
+];
+
+const blogData = [
+  { title: 'Why Laravel is Best for Enterprise Web Applications in 2026', cat: 'PHP', date: 'Jan 15, 2026', img: 'codinec-blog-laravel' },
+  { title: 'How QR Menu Systems are Revolutionizing Restaurants', cat: 'Product', date: 'Jan 10, 2026', img: 'codinec-blog-qr' },
+  { title: 'Complete Guide to Building AI Chatbots for Your Business', cat: 'AI', date: 'Jan 5, 2026', img: 'codinec-blog-chatbot' }
+];
+
+// ============ RENDER SECTIONS ============
+function renderServices() {
+  const grid = document.getElementById('services-grid');
+  grid.innerHTML = services.map((s, i) => {
+    const c = colorMap[s.color];
+    return `<div class="card svc-card" style="opacity:0;transform:translateY(30px)">
+      <div class="icon-box mb-5" style="background:${c.bg};border:1px solid ${c.border}">
+        <i data-lucide="${s.icon}" style="color:${c.text};width:24px;height:24px"></i>
+      </div>
+      <h3 class="text-[17px] font-bold text-white mb-3 leading-snug">${s.title}</h3>
+      <p class="text-slate-400 text-sm leading-relaxed mb-4">${s.desc}</p>
+      <a href="#contact" class="inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-3 transition-all" style="color:${c.text}">Get Quote <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+function renderPortfolio() {
+  const grid = document.getElementById('portfolio-grid');
+  grid.innerHTML = portfolioData.map((p, i) => `
+    <div class="card p-0 overflow-hidden port-card" style="opacity:0;transform:translateY(30px)">
+      <div class="relative overflow-hidden" style="height:200px">
+        <img src="https://picsum.photos/seed/${p.img}/600/400.jpg" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"/>
+        <div class="absolute top-3 left-3"><span class="text-[11px] font-bold uppercase tracking-wider bg-blue-primary/90 text-white px-3 py-1 rounded-full">${p.cat}</span></div>
+      </div>
+      <div class="p-6">
+        <h3 class="text-lg font-bold text-white mb-2">${p.title}</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">${p.desc}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTestimonials() {
+  const grid = document.getElementById('testimonial-grid');
+  grid.innerHTML = testimonialData.map((t, i) => `
+    <div class="testimonial-card test-card" style="opacity:0;transform:translateY(30px)">
+      <div class="flex items-center gap-1 mb-4">${'<svg class="w-4 h-4 star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'.repeat(t.stars)}</div>
+      <p class="text-slate-300 text-[15px] leading-relaxed mb-6">"${t.text}"</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-primary to-blue-light flex items-center justify-center text-white font-bold text-sm">${t.name.charAt(0)}</div>
+        <div><div class="text-sm font-bold text-white">${t.name}</div><div class="text-xs text-slate-500">${t.role}</div></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderBlog() {
+  const grid = document.getElementById('blog-grid');
+  grid.innerHTML = blogData.map((b, i) => `
+    <article class="card p-0 overflow-hidden blog-card" style="opacity:0;transform:translateY(30px)">
+      <div class="relative overflow-hidden" style="height:180px">
+        <img src="https://picsum.photos/seed/${b.img}/600/360.jpg" alt="${b.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"/>
+        <div class="absolute top-3 left-3"><span class="text-[11px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md text-white px-3 py-1 rounded-full">${b.cat}</span></div>
+      </div>
+      <div class="p-6">
+        <div class="text-xs text-slate-500 mb-3">${b.date}</div>
+        <h3 class="text-[16px] font-bold text-white mb-3 leading-snug">${b.title}</h3>
+        <a href="#" class="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-light hover:gap-3 transition-all">Read More <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+      </div>
+    </article>
+  `).join('');
+  lucide.createIcons();
+}
+
+renderServices();
+renderPortfolio();
+renderTestimonials();
+renderBlog();
+
+// ============ THREE.JS — HERO 3D ============
+(function initHero3D() {
+  const wrapper = document.getElementById('hero-3d-wrapper');
+  if (!wrapper) return;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(500, 500);
+  renderer.domElement.style.borderRadius = '24px';
+  wrapper.appendChild(renderer.domElement);
+
+  // Floating geometries
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const mat1 = new THREE.MeshPhongMaterial({ color: 0x2563EB, transparent: true, opacity: 0.7, wireframe: true });
+  const mat2 = new THREE.MeshPhongMaterial({ color: 0x38BDF8, transparent: true, opacity: 0.5, wireframe: true });
+  const mat3 = new THREE.MeshPhongMaterial({ color: 0x818cf8, transparent: true, opacity: 0.4, wireframe: true });
+  const matSolid = new THREE.MeshPhongMaterial({ color: 0x2563EB, transparent: true, opacity: 0.15 });
+
+  // Main icosahedron
+  const ico = new THREE.Mesh(new THREE.IcosahedronGeometry(1.4, 1), mat1);
+  group.add(ico);
+
+  // Inner solid
+  const icoSolid = new THREE.Mesh(new THREE.IcosahedronGeometry(1.1, 1), matSolid);
+  group.add(icoSolid);
+
+  // Torus
+  const torus = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.03, 16, 100), mat2);
+  torus.rotation.x = Math.PI / 3;
+  group.add(torus);
+
+  const torus2 = new THREE.Mesh(new THREE.TorusGeometry(2.5, 0.02, 16, 100), mat3);
+  torus2.rotation.x = -Math.PI / 4;
+  torus2.rotation.y = Math.PI / 6;
+  group.add(torus2);
+
+  // Small cubes orbiting
+  const cubes = [];
+  for (let i = 0; i < 6; i++) {
+    const size = 0.1 + Math.random() * 0.12;
+    const cube = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), mat2);
+    const angle = (i / 6) * Math.PI * 2;
+    const radius = 2.8 + Math.random() * 0.5;
+    cube.userData = { angle, radius, speed: 0.003 + Math.random() * 0.005, yOff: (Math.random() - 0.5) * 2 };
+    group.add(cube);
+    cubes.push(cube);
+  }
+
+  // Particles
+  const particlesGeo = new THREE.BufferGeometry();
+  const pCount = 200;
+  const positions = new Float32Array(pCount * 3);
+  for (let i = 0; i < pCount * 3; i++) positions[i] = (Math.random() - 0.5) * 10;
+  particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particlesMat = new THREE.PointsMaterial({ color: 0x38BDF8, size: 0.015, transparent: true, opacity: 0.6 });
+  const particles = new THREE.Points(particlesGeo, particlesMat);
+  scene.add(particles);
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0x404060, 0.5));
+  const pLight = new THREE.PointLight(0x2563EB, 2, 10);
+  pLight.position.set(3, 3, 3);
+  scene.add(pLight);
+  const pLight2 = new THREE.PointLight(0x38BDF8, 1.5, 10);
+  pLight2.position.set(-3, -2, 2);
+  scene.add(pLight2);
+
+  // Mouse
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    ico.rotation.x += 0.003;
+    ico.rotation.y += 0.005;
+    icoSolid.rotation.x -= 0.002;
+    icoSolid.rotation.y -= 0.003;
+    torus.rotation.z += 0.002;
+    torus2.rotation.z -= 0.0015;
+
+    cubes.forEach(c => {
+      c.userData.angle += c.userData.speed;
+      c.position.x = Math.cos(c.userData.angle) * c.userData.radius;
+      c.position.z = Math.sin(c.userData.angle) * c.userData.radius;
+      c.position.y = c.userData.yOff + Math.sin(c.userData.angle * 2) * 0.3;
+      c.rotation.x += 0.02;
+      c.rotation.y += 0.02;
+    });
+
+    particles.rotation.y += 0.0005;
+    group.rotation.y += (mx * 0.3 - group.rotation.y) * 0.02;
+    group.rotation.x += (-my * 0.2 - group.rotation.x) * 0.02;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    const s = Math.min(500, wrapper.offsetWidth);
+    renderer.setSize(s, s);
+    camera.aspect = 1;
+    camera.updateProjectionMatrix();
+  });
+})();
+
+// ============ THREE.JS — PRODUCT 3D ============
+(function initProduct3D() {
+  const container = document.getElementById('product-3d');
+  if (!container) return;
+  const w = container.clientWidth, h = container.clientHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+  camera.position.set(0, 1.5, 5);
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h);
+  container.appendChild(renderer.domElement);
+
+  // QR Code-like 3D object
+  const group = new THREE.Group();
+  scene.add(group);
+
+  // Base plate (phone/tablet)
+  const baseMat = new THREE.MeshPhongMaterial({ color: 0x1e293b, transparent: true, opacity: 0.9 });
+  const base = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.06, 1.5), baseMat);
+  group.add(base);
+
+  // Screen
+  const screenMat = new THREE.MeshPhongMaterial({ color: 0x0f172a, emissive: 0x0f172a });
+  const screen = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.3), screenMat);
+  screen.position.set(0, 0.04, 0);
+  screen.rotation.x = -Math.PI / 2;
+  group.add(screen);
+
+  // QR grid blocks
+  const qrMat = new THREE.MeshPhongMaterial({ color: 0x2563EB, emissive: 0x2563EB, emissiveIntensity: 0.3 });
+  const qrWhite = new THREE.MeshPhongMaterial({ color: 0x334155, emissive: 0x334155, emissiveIntensity: 0.1 });
+  const blockSize = 0.12;
+  const gridCount = 9;
+  const offset = (gridCount * blockSize) / 2 - blockSize / 2;
+
+  // Simple QR-like pattern
+  const pattern = [
+    [1,1,1,0,1,0,1,1,1],
+    [1,0,1,0,0,0,1,0,1],
+    [1,1,1,0,1,0,1,1,1],
+    [0,0,0,0,1,0,0,0,0],
+    [1,0,1,1,0,1,1,0,1],
+    [0,0,0,0,1,0,0,0,0],
+    [1,1,1,0,1,0,1,1,1],
+    [1,0,1,0,0,0,1,0,1],
+    [1,1,1,0,1,0,1,1,1]
+  ];
+
+  for (let r = 0; r < gridCount; r++) {
+    for (let c = 0; c < gridCount; c++) {
+      const mat = pattern[r][c] ? qrMat : qrWhite;
+      const block = new THREE.Mesh(new THREE.BoxGeometry(blockSize * 0.85, 0.03, blockSize * 0.85), mat);
+      block.position.set(c * blockSize - offset, 0.06, r * blockSize - offset);
+      group.add(block);
+    }
+  }
+
+  // Floating menu icons around
+  const iconMat = new THREE.MeshPhongMaterial({ color: 0x38BDF8, transparent: true, opacity: 0.6, wireframe: true });
+  const icons = [];
+  for (let i = 0; i < 5; i++) {
+    const geo = i % 2 === 0 ? new THREE.OctahedronGeometry(0.15) : new THREE.TetrahedronGeometry(0.15);
+    const mesh = new THREE.Mesh(geo, iconMat);
+    const angle = (i / 5) * Math.PI * 2;
+    mesh.userData = { angle, radius: 2, speed: 0.008, yBase: 0.5 + Math.sin(i) * 0.3 };
+    group.add(mesh);
+    icons.push(mesh);
+  }
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0x404060, 0.6));
+  const pl = new THREE.PointLight(0x2563EB, 3, 10);
+  pl.position.set(2, 3, 3);
+  scene.add(pl);
+  const pl2 = new THREE.PointLight(0x38BDF8, 2, 10);
+  pl2.position.set(-2, 2, 2);
+  scene.add(pl2);
+
+  let isVisible = false;
+  function animate() {
+    requestAnimationFrame(animate);
+    if (!isVisible) return;
+
+    group.rotation.y += 0.005;
+    group.position.y = Math.sin(Date.now() * 0.001) * 0.1;
+
+    icons.forEach(ic => {
+      ic.userData.angle += ic.userData.speed;
+      ic.position.x = Math.cos(ic.userData.angle) * ic.userData.radius;
+      ic.position.z = Math.sin(ic.userData.angle) * ic.userData.radius;
+      ic.position.y = ic.userData.yBase + Math.sin(ic.userData.angle * 3) * 0.2;
+      ic.rotation.x += 0.02;
+      ic.rotation.z += 0.01;
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Only render when visible (performance)
+  const observer = new IntersectionObserver(entries => {
+    isVisible = entries[0].isIntersecting;
+  }, { threshold: 0.1 });
+  observer.observe(container);
+
+  window.addEventListener('resize', () => {
+    const nw = container.clientWidth, nh = container.clientHeight;
+    renderer.setSize(nw, nh);
+    camera.aspect = nw / nh;
+    camera.updateProjectionMatrix();
+  });
+})();
+
+// ============ GSAP ANIMATIONS ============
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero
+gsap.to('.hero-anim', {
+  opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.3
+});
+
+// Navbar scroll
+ScrollTrigger.create({
+  start: 'top -80',
+  onEnter: () => document.getElementById('navbar').classList.add('scrolled'),
+  onLeaveBack: () => document.getElementById('navbar').classList.remove('scrolled')
+});
+
+// About
+gsap.to('.about-anim', {
+  opacity: 1, x: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out',
+  scrollTrigger: { trigger: '#about', start: 'top 75%', toggleActions: 'play none none none' }
+});
+
+// Services header
+gsap.to('.svc-head', {
+  opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+  scrollTrigger: { trigger: '#services', start: 'top 75%' }
+});
+// Service cards
+gsap.to('.svc-card', {
+  opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out',
+  scrollTrigger: { trigger: '#services-grid', start: 'top 80%' }
+});
+
+// Product
+gsap.to('.prod-head', {
+  opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+  scrollTrigger: { trigger: '#product', start: 'top 75%' }
+});
+gsap.to('.prod-anim', {
+  opacity: 1, x: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out',
+  scrollTrigger: { trigger: '#product', start: 'top 65%' }
+});
+
+// Portfolio
+gsap.to('.port-head', {
+  opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+  scrollTrigger: { trigger: '#portfolio', start: 'top 75%' }
+});
+gsap.to('.port-card', {
+  opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+  scrollTrigger: { trigger: '#portfolio-grid', start: 'top 80%' }
+});
+
+// Testimonials
+gsap.to('.test-head', {
+  opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+  scrollTrigger: { trigger: '#testimonials', start: 'top 75%' }
+});
+gsap.to('.test-card', {
+  opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out',
+  scrollTrigger: { trigger: '#testimonial-grid', start: 'top 80%' }
+});
+
+// Blog
+gsap.to('.blog-head', {
+  opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+  scrollTrigger: { trigger: '#blog', start: 'top 75%' }
+});
+gsap.to('.blog-card', {
+  opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+  scrollTrigger: { trigger: '#blog-grid', start: 'top 80%' }
+});
+
+// Contact
+gsap.to('.cont-head', {
+  opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+  scrollTrigger: { trigger: '#contact', start: 'top 75%' }
+});
+gsap.to('.cont-anim', {
+  opacity: 1, x: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out',
+  scrollTrigger: { trigger: '#contact', start: 'top 65%' }
+});
+
+// ============ COUNTER ANIMATION ============
+document.querySelectorAll('.counter').forEach(el => {
+  const target = parseInt(el.dataset.target);
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    once: true,
+    onEnter: () => {
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 50));
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(interval); }
+        el.textContent = current + '+';
+      }, 30);
+    }
+  });
+});
+
+// ============ MOBILE MENU ============
+const menuToggle = document.getElementById('menu-toggle');
+const menuClose = document.getElementById('menu-close');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileOverlay = document.getElementById('mobile-overlay');
+
+function openMobile() { mobileMenu.classList.add('open'); mobileOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeMobile() { mobileMenu.classList.remove('open'); mobileOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+menuToggle.addEventListener('click', openMobile);
+menuClose.addEventListener('click', closeMobile);
+mobileOverlay.addEventListener('click', closeMobile);
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', closeMobile));
+
+// ============ TOAST ============
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ============ FORM ============
+function handleSubmit(e) {
+  e.preventDefault();
+  const st = document.getElementById('submit-text');
+  const sl = document.getElementById('submit-loading');
+  st.classList.add('hidden');
+  sl.classList.remove('hidden');
+  sl.classList.add('flex');
+  setTimeout(() => {
+    st.classList.remove('hidden');
+    sl.classList.add('hidden');
+    sl.classList.remove('flex');
+    e.target.reset();
+    showToast('Message sent successfully! We\'ll contact you within 24 hours.');
+  }, 1800);
+}
+
+function handleNewsletter(e) {
+  e.preventDefault();
+  e.target.reset();
+  showToast('Subscribed! Check your inbox for confirmation.');
+}
+</script>
+</body>
+</html>

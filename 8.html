@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codinec - Build Solutions</title>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#0f172a;
+      color:#fff;
+      overflow-x:hidden;
+    }
+
+    .hero{
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 8%;
+      position:relative;
+    }
+
+    .left{
+      max-width:500px;
+    }
+
+    h1{
+      font-size:48px;
+      line-height:1.2;
+      margin-bottom:20px;
+    }
+
+    p{
+      color:#cbd5e1;
+      margin-bottom:25px;
+    }
+
+    .points{
+      margin-bottom:25px;
+    }
+
+    .points div{
+      margin:8px 0;
+    }
+
+    .buttons button{
+      padding:12px 20px;
+      border:none;
+      margin-right:10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .primary{
+      background:#3b82f6;
+      color:white;
+    }
+
+    .secondary{
+      background:transparent;
+      border:1px solid #3b82f6;
+      color:#3b82f6;
+    }
+
+    /* Right animation area */
+    .right{
+      position:relative;
+      width:400px;
+      height:400px;
+    }
+
+    .box{
+      position:absolute;
+      width:120px;
+      height:120px;
+      border-radius:15px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      text-align:center;
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .problem{ top:0; left:0; }
+    .code{ top:50%; left:50%; transform:translate(-50%,-50%); }
+    .solution{ bottom:0; right:0; }
+
+    /* Background particles */
+    .bg{
+      position:absolute;
+      width:100%;
+      height:100%;
+      top:0;
+      left:0;
+      z-index:-1;
+    }
+
+    .circle{
+      position:absolute;
+      width:200px;
+      height:200px;
+      background:radial-gradient(circle, #3b82f6, transparent);
+      opacity:0.2;
+      border-radius:50%;
+    }
+
+    .c1{ top:10%; left:20%; }
+    .c2{ bottom:10%; right:20%; }
+
+  </style>
+</head>
+<body>
+
+<section class="hero">
+
+  <div class="left">
+    <h1 id="title">We Build Solutions, Not Just Code</h1>
+
+    <p>
+      We help startups identify real market problems and build powerful web & mobile solutions to solve them.
+    </p>
+
+    <div class="points">
+      <div>🚀 Startup Focused</div>
+      <div>💡 Problem Solvers</div>
+      <div>⚙️ Web + App + Software</div>
+    </div>
+
+    <div class="buttons">
+      <button class="primary">Start Your Project</button>
+      <button class="secondary">View Work</button>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="box problem">Problem ❌</div>
+    <div class="box code">Code ⚙️</div>
+    <div class="box solution">Solution ✅</div>
+  </div>
+
+  <div class="bg">
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+  </div>
+
+</section>
+
+<script>
+
+// Text animation
+gsap.from("#title", {
+  y:50,
+  opacity:0,
+  duration:1
+});
+
+// Boxes animation
+gsap.from(".box", {
+  scale:0,
+  opacity:0,
+  duration:1,
+  stagger:0.3
+});
+
+// Floating animation
+gsap.to(".problem", {
+  y:20,
+  repeat:-1,
+  yoyo:true,
+  duration:2
+});
+
+gsap.to(".solution", {
+  y:-20,
+  repeat:-1,
+  yoyo:true,
+  duration:2
+});
+
+// Background movement
+gsap.to(".circle", {
+  x:30,
+  y:30,
+  repeat:-1,
+  yoyo:true,
+  duration:5
+});
+
+</script>
+
+</body>
+</html>

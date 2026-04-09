@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codinec - Premium Tech Solutions</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #38bdf8; /* Cyan */
+            --accent-secondary: #818cf8; /* Indigo */
+            --accent-glow: rgba(56, 189, 248, 0.5);
+            --glass-bg: rgba(30, 41, 59, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-radius: 16px;
+            --font-main: 'Outfit', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            width: 100vw;
+        }
+
+        /* --- Background Effects --- */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--accent-secondary), transparent);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--accent-primary), transparent);
+        }
+
+        /* --- Header / Nav --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: var(--accent-primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 5% 2rem 5%;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        /* Left Side: Content */
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 50px;
+            color: var(--accent-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dynamic-word {
+            color: var(--accent-primary);
+            -webkit-text-fill-color: var(--accent-primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        p.subheading {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .key-points {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .key-points li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+
+        .key-points li svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            color: var(--accent-secondary);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #0f172a;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Right Side: Visual Flow */
+        .hero-visual {
+            position: relative;
+            height: 500px; /* Fixed height for animation canvas */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* The Flow Path Background */
+        .flow-line {
+            position: absolute;
+            width: 80%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            border-radius: 2px;
+        }
+
+        .flow-progress {
+            position: absolute;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+            transition: width 0.1s;
+        }
+
+        /* Nodes */
+        .node {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 2;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .node i {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .node span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Specific Node Positioning (Initial State) */
+        .node-problem {
+            left: 0%;
+            color: #f87171; /* Redish */
+        }
+        .node-code {
+            left: 33%;
+            color: var(--accent-primary);
+        }
+        .node-solution {
+            left: 66%;
+            color: #4ade80; /* Greenish */
+        }
+        .node-growth {
+            left: 100%;
+            transform: translateX(-100%);
+            color: #fbbf24; /* Goldish */
+        }
+
+        /* Icons (Inline SVGs for performance) */
+        .icon-svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+            margin-bottom: 6px;
+        }
+
+        /* --- Footer / Placeholder --- */
+        .dummy-content {
+            height: 100vh;
+            background: #0b1120;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            h1 { font-size: 3rem; }
+            .hero-container { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-visual { height: 400px; width: 100%; }
+            
+            /* Adjust nodes for mobile vertical stack */
+            .flow-line { width: 4px; height: 80%; }
+            .flow-progress { width: 100%; height: 0%; }
+            
+            .node { position: absolute; }
+            .node-problem { top: 0%; left: 50%; transform: translateX(-50%); }
+            .node-code { top: 33%; left: 50%; transform: translateX(-50%); }
+            .node-solution { top: 66%; left: 50%; transform: translateX(-50%); }
+            .node-growth { top: 100%; left: 50%; transform: translate(-50%, -100%); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .cta-group { flex-direction: column; width: 100%; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">Codinec<span>.</span></a>
+        <!-- Simple Nav Placeholder -->
+        <nav>
+            <a href="#" style="color:white; text-decoration:none; font-weight:600;">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Hero Section -->
+    <main class="hero">
+        <div class="hero-container">
+            
+            <!-- LEFT SIDE: Text Content -->
+            <div class="hero-content parallax-layer" data-speed="2">
+                <span class="badge hero-anim">Future of Digital Innovation</span>
+                
+                <h1 class="hero-anim">
+                    Building Scalable <br>
+                    <span class="dynamic-word">Solutions</span>
+                </h1>
+                
+                <p class="subheading hero-anim">
+                    We transform complex startup problems into elegant digital products. 
+                    From concept to code, we engineer your growth.
+                </p>
+
+                <ul class="key-points hero-anim">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        Startup Focused
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        Real-world Problem Solvers
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        Web • App • Software
+                    </li>
+                </ul>
+
+                <div class="cta-group hero-anim">
+                    <a href="#" class="btn btn-primary">Start Project</a>
+                    <a href="#" class="btn btn-secondary">View Case Studies</a>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: Animated Visual Flow -->
+            <div class="hero-visual parallax-layer" data-speed="1">
+                <div class="flow-line">
+                    <div class="flow-progress" id="progressBar"></div>
+                </div>
+
+                <!-- Node 1: Problem -->
+                <div class="node node-problem">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    <span>Problem</span>
+                </div>
+
+                <!-- Node 2: Code -->
+                <div class="node node-code">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    <span>Code</span>
+                </div>
+
+                <!-- Node 3: Solution -->
+                <div class="node node-solution">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Solution</span>
+                </div>
+
+                <!-- Node 4: Growth -->
+                <div class="node node-growth">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="20" x2="12" y2="10"></line>
+                        <line x1="18" y1="20" x2="18" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="16"></line>
+                    </svg>
+                    <span>Growth</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Dummy content to allow scrolling -->
+    <div class="dummy-content">
+        <div>Scroll Down for More Content</div>
+    </div>
+
+    <!-- JavaScript Implementation -->
+    <script>
+        // Wait for DOM
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- 1. PAGE LOAD ANIMATION ---
+            const tl = gsap.timeline();
+
+            // Text Content Animation
+            tl.to(".hero-anim", {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power3.out"
+            })
+            // Heading specific scale in
+            .from("h1", {
+                scale: 0.9,
+                opacity: 0,
+                duration: 1.2,
+                ease: "back.out(1.7)"
+            }, "-=1")
+            // Buttons scale in
+            .from(".btn", {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.1,
+                ease: "back.out(1.7)"
+            }, "-=0.5");
+
+            // Right Side Visual Entry
+            tl.from(".node", {
+                scale: 0,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "back.out(1.7)"
+            }, "-=1");
+
+
+            // --- 2. CONTINUOUS ANIMATION (Loop) ---
+            
+            // Problem Float Up/Down
+            gsap.to(".node-problem", {
+                y: 20,
+                repeat: -1,
+                yoyo: true,
+                duration: 2.5,
+                ease: "sine.inOut"
+            });
+
+            // Code Rotate
+            gsap.to(".node-code", {
+                rotation: 360,
+                repeat: -1,
+                duration: 10,
+                ease: "linear"
+            });
+
+            // Solution Float Opposite
+            gsap.to(".node-solution", {
+                y: -20,
+                repeat: -1,
+                yoyo: true,
+                duration: 2.5,
+                ease: "sine.inOut"
+            });
+
+            // Growth Pulse
+            gsap.to(".node-growth", {
+                scale: 1.1,
+                repeat: -1,
+                yoyo: true,
+                duration: 1.5,
+                ease: "power1.inOut"
+            });
+            
+            // Background Blobs Movement
+            gsap.to(".blob-1", { x: 50, y: 30, duration: 8, repeat: -1, yoyo: true, ease: "sine.inOut" });
+            gsap.to(".blob-2", { x: -30, y: -50, duration: 10, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+
+            // --- 3. PARALLAX EFFECT ---
+            
+            const container = document.querySelector('.hero');
+            
+            container.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+                const layers = document.querySelectorAll('.parallax-layer');
+                
+                layers.forEach(layer => {
+                    const speed = layer.getAttribute('data-speed');
+                    const xOffset = x * speed * 20;
+                    const yOffset = y * speed * 20;
+                    
+                    gsap.to(layer, {
+                        x: xOffset,
+                        y: yOffset,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+
+            // --- 4. SCROLL ANIMATION (The Journey) ---
+            
+            // Check if desktop to enable complex scroll pinning
+            if (window.innerWidth > 992) {
+                const scrollTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".hero",
+                        start: "top top",
+                        end: "+=600", // Scroll duration
+                        scrub: 1,
+                        pin: true,
+                        // markers: true // Debug markers if needed
+                    }
+                });
+
+                // 1. Animate Progress Bar
+                scrollTl.to("#progressBar", { width: "100%", duration: 5 }, 0);
+
+                // 2. Transform Nodes
+                // Problem fades out and moves left
+                scrollTl.to(".node-problem", { 
+                    x: -150, 
+                    opacity: 0, 
+                    scale: 0.8, 
+                    duration: 2 
+                }, 0);
+
+                // Code moves to center and grows
+                scrollTl.to(".node-code", { 
+                    left: "50%", 
+                    x: "-50%", // Center fix
+                    scale: 1.5, 
+                    rotation: 720, // Spin fast during transition
+                    duration: 3,
+                    ease: "power2.inOut"
+                }, 1);
+
+                // Solution enters from right
+                scrollTl.fromTo(".node-solution", 
+                    { x: 100, opacity: 0, scale: 0.5 },
+                    { x: 0, opacity: 1, scale: 1, duration: 3 },
+                    2
+                );
+
+                // Growth pops in at the end
+                scrollTl.fromTo(".node-growth",
+                    { scale: 0, opacity: 0 },
+                    { scale: 1.2, opacity: 1, duration: 2, ease: "elastic.out(1, 0.3)" },
+                    4
+                );
+            }
+
+
+            // --- 5. TEXT EFFECT (Typing / Dynamic) ---
+            
+            const words = ["Solutions", "Products", "Growth"];
+            const wordElement = document.querySelector(".dynamic-word");
+            let wordIndex = 0;
+
+            function changeWord() {
+                // Animate Out
+                gsap.to(wordElement, {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.3,
+                    onComplete: () => {
+                        wordIndex = (wordIndex + 1) % words.length;
+                        wordElement.textContent = words[wordIndex];
+                        // Animate In
+                        gsap.fromTo(wordElement, 
+                            { y: 20, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.3 }
+                        );
+                    }
+                });
+            }
+
+            // Start loop
+            setInterval(changeWord, 2500);
+
+
+            // --- 6. MICRO INTERACTIONS ---
+            
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    gsap.to(btn, { scale: 1.05, duration: 0.2 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { scale: 1, duration: 0.2 });
+                });
+            });
+
+            const nodes = document.querySelectorAll('.node');
+            nodes.forEach(node => {
+                node.addEventListener('mouseenter', () => {
+                    gsap.to(node, { scale: 1.1, rotate: 5, duration: 0.3 });
+                });
+                node.addEventListener('mouseleave', () => {
+                    gsap.to(node, { scale: 1, rotate: 0, duration: 0.3 });
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

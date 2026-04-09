@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codinec - Modern Tech Hero</title>
+    
+    <!-- Fonts: Inter for that clean tech look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0d1117; /* GitHub/GSAP dark mode feel */
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent: #2f81f7; /* GSAP Blue */
+            --accent-glow: rgba(47, 129, 247, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Canvas Background --- */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span { color: var(--accent); }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            max-width: 900px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(47, 129, 247, 0.15);
+            border: 1px solid rgba(47, 129, 247, 0.3);
+            border-radius: 100px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            opacity: 0; /* Hidden initially for GSAP */
+            transform: translateY(20px);
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            -webkit-text-fill-color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        p.sub-text {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* --- Buttons --- */
+        .cta-container {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .btn {
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 20px rgba(47, 129, 247, 0.4);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(47, 129, 247, 0.6);
+            background-color: #4096ff;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* --- Scroll Indicator --- */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .wheel {
+            width: 4px;
+            height: 8px;
+            background: white;
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* --- Placeholder Content --- */
+        .next-section {
+            height: 100vh;
+            background: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .next-section h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--text-muted);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; letter-spacing: -1px; }
+            .cta-container { flex-direction: column; width: 100%; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Codinec<span>.</span></a>
+        <nav>
+            <a href="#" style="color:white; text-decoration:none; font-size: 0.9rem; font-weight:600;">Get Started</a>
+        </nav>
+    </header>
+
+    <!-- Canvas for Network Animation -->
+    <canvas id="hero-canvas"></canvas>
+
+    <section class="hero">
+        <div class="content-wrapper">
+            <div class="badge">Future-Ready Development</div>
+            
+            <h1>
+                We build <br>
+                <span class="highlight">Scalable</span> 
+                <span class="gradient-text">Software.</span>
+            </h1>
+            
+            <p class="sub-text">
+                Codinec transforms complex ideas into high-performance digital products. 
+                We are the bridge between your vision and code.
+            </p>
+
+            <div class="cta-container">
+                <a href="#" class="btn btn-primary">Start Your Project</a>
+                <a href="#" class="btn btn-secondary">View Our Work</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <section class="next-section">
+        <h2>Scroll to Explore More</h2>
+    </section>
+
+    <script>
+        // --- 1. CANVAS NETWORK ANIMATION (GSAP Style) ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        // Resize handling
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Particle Class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(47, 129, 247, 0.5)'; // Accent color
+                ctx.fill();
+            }
+        }
+
+        // Initialize Particles
+        for (let i = 0; i < 60; i++) {
+            particles.push(new Particle());
+        }
+
+        // Animation Loop
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw connections first
+            for (let i = 0; i < particles.length; i++) {
+                const p1 = particles[i];
+                p1.update();
+                p1.draw();
+
+                // Connect particles if close
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(47, 129, 247, ${1 - dist / 150})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // --- 2. GSAP ENTRANCE ANIMATIONS ---
+        
+        // Wait for page load
+        window.addEventListener('load', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const tl = gsap.timeline();
+
+            // 1. Badge enters
+            tl.to(".badge", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            })
+            // 2. Heading enters (staggered lines logic could be added, but simple block here)
+            .to("h1", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=0.6")
+            // 3. Text
+            .to(".sub-text", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            }, "-=0.6")
+            // 4. Buttons
+            .to(".cta-container", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            }, "-=0.6")
+            // 5. Scroll Indicator
+            .to(".scroll-indicator", {
+                opacity: 1,
+                duration: 1
+            }, "-=0.4");
+
+            // --- 3. SCROLL EFFECTS ---
+            
+            // Parallax on background (simulated by moving canvas slightly)
+            gsap.to("#hero-canvas", {
+                yPercent: 20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+            // Text Fade out on scroll
+            gsap.to(".content-wrapper", {
+                opacity: 0,
+                y: -50,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "center top",
+                    scrub: true
+                }
+            });
+            
+            // Scroll Indicator falls down
+            gsap.to(".scroll-indicator", {
+                y: 50,
+                opacity: 0,
+                ease: "power1.in",
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "100px top",
+                    scrub: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>
